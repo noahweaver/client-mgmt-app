@@ -1,0 +1,85 @@
+                                        /* Spacing */
+/* Margin-top By Percent (%)*/
+.mt-5p{
+    margin-top: 5%;
+}
+.mt-15p{
+    margin-top: 15%;
+}
+/* Margin-X Axis By Percent (%)*/
+.mx-10p{
+    margin: 0 10%;
+}
+
+                                        /* Sizing */
+/* By Percent (%) */
+.w-15p{
+    width: 15%;
+}
+.w-20p{
+    width: 20%;
+}
+.w-25p{
+    width: 25%;
+}
+.w-35p{
+    width: 35%;
+}
+.w-100p{
+    width: 100%;
+}
+/* Min Height by View Hieght*/
+.min-h-50vh{
+    min-height: 50vh;
+}
+.min-h-100vh{
+    min-height: 100vh;
+}
+                                            /* Font Size */
+/* By Pixel */
+.font-100{
+    font-size: 100px;
+}
+                                    /* Background Colors */
+.bg-dough{
+    background-color: rgba(202, 196, 193, 0.85);
+}
+.bg-almost-black{
+    background-color: #2f3133;
+}
+.bg-grey-transparent3{
+    background-color: rgba(204, 207, 215, 0.3);
+}
+.bg-grey-transparent5{
+    background-color: rgba(204, 207, 215, 0.5);
+}
+
+                                        /* Text Colors */
+.black-text{
+    color: black;
+}
+.text-almost-black{
+    color: #232425;
+}
+.text-light-grey{
+    color: #cccfd7;
+}
+
+                                                /* Cursors */
+.pointer{
+    cursor: pointer;
+}
+
+                                                /* List Items */
+.list-hover-red{
+    color: black
+}
+.list-hover-red li:hover{
+    color: rgb(223, 0, 0);
+    font-size:x-large;
+}
+.list-item{
+    text-decoration: none;
+    list-style-type: none;
+    font-size:large;
+}
