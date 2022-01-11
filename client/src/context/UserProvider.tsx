@@ -2,23 +2,9 @@ import React, { useState } from 'react'
 import axios from 'axios'
 const userAxios = axios.create()
 
-// type userStateType = {
-//         user: any,
-//         token: string,
-//         errMsg: string
-// }
-
-// type userProviderType = {
-//     userState: userStateType,
-//     setUserState: React.Dispatch<React.SetStateAction<userStateType>>,
-//     signup: (credentials: any) => void,
-//     login: (credentials: any) => void,
-// }
 
 const UserContext = React.createContext({})
 // const UserContext = React.createContext<userProviderType>({} as userProviderType)
-
-
 
 userAxios.interceptors.request.use(config => {
     const token = localStorage.getItem("token") || "";

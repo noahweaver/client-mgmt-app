@@ -4,20 +4,20 @@ import { useNavigate } from 'react-router-dom'
 import { useUserContext } from '../context/UserProvider'
 
 type homeUserState = {
-    username: string,
-    password: string
+    user: {
+        username: string
+    }
 }
 
 function Home() {
 
     const navigate = useNavigate()
 
-    const { username, password } = useUserContext() as homeUserState
+    const { user: { username } } = useUserContext() as homeUserState
 
     return (
         <div>
-            <h1>Hello {username}</h1>
-            <p>Your password is {password}</p>
+            <h1>Hello {username}!</h1>
             <button onClick={() => {
                 navigate('/clientdashboard')
             }}>Client Dashboard</button>
