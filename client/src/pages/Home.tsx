@@ -18,9 +18,17 @@ function Home() {
     return (
         <div>
             <h1>Hello {username}!</h1>
-            <button onClick={() => {
-                navigate('/clientdashboard')
-            }}>Client Dashboard</button>
+            <div>
+                <button onClick={() => {
+                    navigate('/clientdashboard')
+                    }}>Client Dashboard</button>
+            </div>
+            <div>
+                <button onClick={() => {
+                    navigate('/invoices')
+                    }}>Invoices</button>
+            </div>
+            
         </div>
     )
 }
