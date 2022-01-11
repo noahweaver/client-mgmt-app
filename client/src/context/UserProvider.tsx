@@ -15,6 +15,8 @@ userAxios.interceptors.request.use(config => {
 });
 
 export const UserProvider: React.FC = ({ children }) => {
+
+    // add user invoices to state
     
     const initState = {
         // user: JSON.parse(localStorage.getItem("user") || "") || {},
@@ -44,6 +46,7 @@ export const UserProvider: React.FC = ({ children }) => {
             // .catch(err => handleAuthErr(err.response.data.errMsg))
             // .catch(err => console.dir(err))
     }
+    
     //Login
     function login(credentials: any){
         axios.post("/authentication/login", credentials)
@@ -52,6 +55,8 @@ export const UserProvider: React.FC = ({ children }) => {
                 const {user, token} = res.data
                 localStorage.setItem("token", token)
                 localStorage.setItem("user", JSON.stringify(user))
+                getUserInvoices()
+                // add to state update
                 setUserState(prevUserState => ({
                     ...prevUserState,
                     user,
@@ -73,6 +78,21 @@ function logout(){
         errMsg: ""
     })
 }
+    //GET USER INVOICES
+    function getUserInvoices(){
+        console.log("getUserInvoices was called")
+        //userAxios.get
+    }
+
+    //ADD NEW CLIENT 
+    function addNewClient(){
+        console.log("Add New Client was called")
+        //POST
+        //Will need userID to be passed
+    }
+        
+    
+
     return (
         <UserContext.Provider
             value ={{
@@ -80,7 +100,8 @@ function logout(){
                 setUserState,
                 signup,
                 login,
-                logout
+                logout,
+                addNewClient
             }} >
 
             {children}
