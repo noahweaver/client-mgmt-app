@@ -5,7 +5,12 @@ const User = require('../models/user.ts')
 const jwt = require('jsonwebtoken')
 
 
+//req type should be Request, res type should be Response
+    //this is throwing errors that need to be worked through
+        //res.status(500) is looking for default type: number.
 
+
+        
 //Signup
 authRouter.post("/signup", (req: any, res: any, next: any) => {
     User.findOne({ username: req.body.username.toLowerCase() }, (err: any, user: object) => {

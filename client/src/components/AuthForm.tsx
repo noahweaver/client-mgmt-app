@@ -22,26 +22,24 @@ const AuthForm: React.FC<FormProps> = ({
 
     return (
         <div>
+            <h1>{btnText}</h1>
             <form onSubmit={handleSubmit}>
-                
+                <label>Username</label>    
                 <input
                     type="text"
                     value={username}
                     name="username"
                     onChange={handleChange}
                     placeholder="Username"
-                >
-                    <label>Username</label>    
-                </input>
+                />
+                <label>Password</label>    
                 <input 
                     type="text"
                     value={password}
                     name="password"
                     onChange={handleChange}
                     placeholder="Password"
-                >
-                    <label>Password</label>
-                </input>
+                />
                 <button type="submit">{btnText}</button>
                 <p>{errMsg}</p>
             </form>

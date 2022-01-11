@@ -1,9 +1,14 @@
 import React from 'react'
 
-const Nav: React.FC = () => {
+interface NavProps {
+    logout: () => void
+}
+
+const Nav: React.FC<NavProps> = ({logout}) => {
     return (
         <div>
-            <button>Logout</button>
+            <h3>NAV BAR</h3>
+            <button onClick={logout}>Logout</button>
         </div>
     )
 }

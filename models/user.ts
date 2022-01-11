@@ -7,11 +7,11 @@ const bcrypt = require('bcrypt')
 export interface IUser extends Document {
     username: string,
     password: string,
-    comparePassword: (password: string) => Promise<Boolean>
+    comparePassword: (password: string) => Promise<Boolean>,
     // validatePassword(password: string): boolean,
 }
 
-const userSchema = new Schema<IUser>({
+export const userSchema = new Schema<IUser>({
     username: {
         type: String,
         required: true,

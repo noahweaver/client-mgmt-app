@@ -31,7 +31,9 @@ userAxios.interceptors.request.use(config => {
 export const UserProvider: React.FC = ({ children }) => {
     
     const initState = {
-        user: JSON.parse(localStorage.getItem("user") || "") || {},
+        // user: JSON.parse(localStorage.getItem("user") || "") || {},
+        //@ts-ignore
+        user: JSON.parse(localStorage.getItem("user")) || {},
         token: localStorage.getItem("token") || "",
         errMsg: ""
     }
@@ -75,22 +77,24 @@ export const UserProvider: React.FC = ({ children }) => {
             // .catch(err => handleAuthErr(err.response.data.errMsg))
     }
 //logout
-// function logout(){
-//     localStorage.removeItem("token")
-//     localStorage.removeItem("user")
-//     localStorage.removeItem("User Issues")
-//     setUserState({
-//         user: {},
-//         token: ""
-//     })
-// }
+function logout(){
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    localStorage.removeItem("User Issues")
+    setUserState({
+        user: {},
+        token: "",
+        errMsg: ""
+    })
+}
     return (
         <UserContext.Provider
             value ={{
                 ...userState,
                 setUserState,
                 signup,
-                login
+                login,
+                logout
             }} >
 
             {children}

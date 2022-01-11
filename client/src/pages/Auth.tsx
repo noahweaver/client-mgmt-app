@@ -7,6 +7,12 @@ export interface IInput {
     password: string
 }
 
+type authUserState = {
+    errMsg: string
+    login: (credentials: any) => void,
+    signup: (credentials: any) => void
+}
+
 const Auth: React.FC  = () => {
 
     const initInputs: IInput = { username: "", password: ""}
@@ -15,12 +21,7 @@ const Auth: React.FC  = () => {
     const [toggle, setToggle] = useState<boolean>(false)
 
     //going to add signup, login, and error message
-    const { 
-        userState: {
-            username,
-            password,
-        }
-    } = useUserContext()
+    const { errMsg, login, signup } = useUserContext() as authUserState
 
     function handleChange(e: any){
         const {name, value} = e.target
@@ -33,13 +34,13 @@ const Auth: React.FC  = () => {
       function handleSignup(e: any){
         e.preventDefault()
         console.log("handleSignup was called")
-        // signup(inputs)
+        signup(inputs)
       }
     
       function handleLogin(e: any){
         e.preventDefault()
         console.log("handleLogin was called")
-        // login(inputs)
+        login(inputs)
       }
     
       function toggleForm(){
@@ -59,9 +60,10 @@ const Auth: React.FC  = () => {
                 <>
                     <AuthForm 
                         btnText="Sign up"
-                        handleChange={(e: any) => handleChange}
-                        handleSubmit={(e: any) => handleSignup}
+                        handleChange={handleChange}
+                        handleSubmit={handleSignup}
                         inputs={inputs}
+                        errMsg={errMsg}
                     />
                     <button onClick={toggleForm}>Already a member?</button>
                 </>
@@ -69,9 +71,10 @@ const Auth: React.FC  = () => {
                 <>
                     <AuthForm 
                         btnText="Login"
-                        handleChange={(e: any) => handleChange}
-                        handleSubmit={(e: any) => handleLogin}
+                        handleChange={handleChange}
+                        handleSubmit={handleLogin}
                         inputs={inputs}
+                        errMsg={errMsg}
                     />
                     <button onClick={toggleForm}>Not a member?</button>
                 </>
