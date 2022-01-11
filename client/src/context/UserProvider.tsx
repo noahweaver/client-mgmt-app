@@ -41,8 +41,8 @@ export const UserProvider: React.FC = ({ children }) => {
     const [userState, setUserState] = useState(initState)
 
 //Signup
-    function signup(credentials: string){
-        axios.post("/auth/signup", credentials)
+    function signup(credentials: any){
+        axios.post("/authentication/signup", credentials)
             .then(res => {
                 const {user, token} = res.data
                 localStorage.setItem("token", token)
@@ -59,8 +59,8 @@ export const UserProvider: React.FC = ({ children }) => {
             // .catch(err => console.dir(err))
     }
     //Login
-    function login(credentials: string){
-        axios.post("/auth/login", credentials)
+    function login(credentials: any){
+        axios.post("/authentication/login", credentials)
             .then(res => {
                 console.log(res)
                 const {user, token} = res.data
@@ -71,13 +71,13 @@ export const UserProvider: React.FC = ({ children }) => {
                     user,
                     token
                 }))
-                
             })
             .catch(err => console.dir(err))
             // .catch(err => handleAuthErr(err.response.data.errMsg))
     }
 //logout
 function logout(){
+    console.log("UserProvider: logout was called")
     localStorage.removeItem("token")
     localStorage.removeItem("user")
     localStorage.removeItem("User Issues")
