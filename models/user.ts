@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 import { Schema, Document } from 'mongoose';
 import { IClient } from '../interfaces/IClient';
 const bcrypt = require('bcrypt');
-import { clientSchema } from './client';
 
 export interface IUser extends Document {
     username: string;
@@ -23,10 +22,6 @@ export const userSchema = new Schema<IUser>({
     password: {
         type: String,
         required: true
-    },
-    clients: {
-        type: [clientSchema],
-        default: []
     }
 });
 
