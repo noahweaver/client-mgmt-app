@@ -6,7 +6,15 @@ import { NextFunction } from "express";
 import { IRequest, IResponse } from "../interfaces/expressInterfaces"
 
 //GET all Clients
-
+clientRouter.get("/", (req: IRequest, res: IResponse, next: NextFunction) => {
+    Client.find((err: any, clients: any) => {
+      if(err){
+        res.status(500)
+        return next(err)
+      }
+      return res.status(200).send(clients)
+    })
+  })
 //GET ONE Client
 
 //GET Clients by UserId
