@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose'
+import { ObjectId, Schema } from 'mongoose'
 import { IInvoice } from './IInvoice'
 
 //For client.ts model
@@ -16,4 +16,5 @@ export interface IClient extends Document {
         ref: "User"
     };
     notes?: string;
+    _id?: string;
 };

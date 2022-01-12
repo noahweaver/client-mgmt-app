@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 const userAxios = axios.create()
 
@@ -23,10 +23,15 @@ export const UserProvider: React.FC = ({ children }) => {
         //@ts-ignore
         user: JSON.parse(localStorage.getItem("user")) || {},
         token: localStorage.getItem("token") || "",
-        errMsg: ""
+        errMsg: "",
+        clients: []
     }
 
     const [userState, setUserState] = useState(initState)
+
+    useEffect(() => {
+       getUserClients() 
+    }, [])
 
 //Signup
     function signup(credentials: any){
@@ -56,6 +61,7 @@ export const UserProvider: React.FC = ({ children }) => {
                 localStorage.setItem("token", token)
                 localStorage.setItem("user", JSON.stringify(user))
                 getUserInvoices()
+                getUserClients()
                 // add to state update
                 setUserState(prevUserState => ({
                     ...prevUserState,
@@ -75,9 +81,24 @@ function logout(){
     setUserState({
         user: {},
         token: "",
-        errMsg: ""
+        errMsg: "",
+        clients: []
     })
 }
+
+    //GET USER ClIENTS
+    function getUserClients(){
+        console.log("getUserClients was called")
+        userAxios.get("/api/client/user")
+            .then(res => {
+                const userClientList = res.data
+                setUserState(prevState => ({
+                    ...prevState,
+                    clients: userClientList
+                }))
+            })
+    }
+
     //GET USER INVOICES
     function getUserInvoices(){
         console.log("getUserInvoices was called")
