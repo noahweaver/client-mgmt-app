@@ -6,8 +6,6 @@ import { NextFunction } from "express";
 import { IRequest, IResponse } from "../interfaces/expressInterfaces";
 import { IClient } from '../interfaces/IClient';
 
-//type for client should be client interface? clients array of clients?
-
 //GET all Clients
 clientRouter.get("/", (req: IRequest, res: IResponse, next: NextFunction) => {
     Client.find((err: any, clients: Array<IClient>) => {
@@ -49,7 +47,7 @@ clientRouter.get("/user", (req: IRequest, res: IResponse, next: NextFunction) =>
   });
 
 //GET ONE Client
-//A user can get a client that isn't theirs if they have the ID
+//A user can GET a client that isn't theirs if they have the ID
 clientRouter.get("/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
     Client.find({_id: req.params.clientId},
       (err: any, client: IClient) => {
