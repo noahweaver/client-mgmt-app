@@ -3,8 +3,8 @@ const express = require("express");
 const clientRouter = express.Router();
 const Client = require('../models/client.ts');
 import { NextFunction } from "express";
-import { IRequest, IResponse } from "../interfaces/expressInterfaces"
-import { IClient } from '../interfaces/IClient'
+import { IRequest, IResponse } from "../interfaces/expressInterfaces";
+import { IClient } from '../interfaces/IClient';
 
 //type for client should be client interface? clients array of clients?
 
@@ -17,7 +17,7 @@ clientRouter.get("/", (req: IRequest, res: IResponse, next: NextFunction) => {
       }
       return res.status(200).send(clients)
     })
-  })
+  });
 
 //Add new Client
 clientRouter.post("/", (req: IRequest, res: IResponse, next: NextFunction) => {
@@ -46,7 +46,7 @@ clientRouter.get("/user", (req: IRequest, res: IResponse, next: NextFunction) =>
       }
       return res.status(200).send(clients)
     })
-  })
+  });
 
 //GET ONE Client
 //A user can get a client that isn't theirs if they have the ID
@@ -60,12 +60,24 @@ clientRouter.get("/:clientId", (req: IRequest, res: IResponse, next: NextFunctio
         return res.status(200).send(client)
       }
       )
-  })
-  
+  });
+
 //Update Client
 
-//Delete Client
 
+//Delete Client
+clientRouter.delete("/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
+    Client.findOneAndDelete(
+      { _id: req.params.clientId, user: req.user._id },
+      (err: any, deletedClient: IClient) => {
+        if(err){
+          res.status(500)
+          return next(err)
+        }
+        return res.status(200).send(`Successfully delete client: ${deletedClient.firstName} ${deletedClient.lastName}`)
+      }
+    )
+  });
 
 module.exports = clientRouter
 
