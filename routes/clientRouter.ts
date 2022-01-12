@@ -62,9 +62,6 @@ clientRouter.get("/:clientId", (req: IRequest, res: IResponse, next: NextFunctio
       )
   });
 
-//Update Client
-
-
 //Delete Client
 clientRouter.delete("/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
     Client.findOneAndDelete(
@@ -78,6 +75,22 @@ clientRouter.delete("/:clientId", (req: IRequest, res: IResponse, next: NextFunc
       }
     )
   });
+
+//Update Client
+clientRouter.put("/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
+    Client.findOneAndUpdate(
+      { _id: req.params.clientId, user: req.user._id},
+      req.body, 
+      { new: true },
+      (err: any, updatedClient: IClient) => {
+        if(err){
+          res.status(500)
+          return next(err)
+        }
+        return res.status(201).send(updatedClient)
+      }
+    )
+  })  
 
 module.exports = clientRouter
 
