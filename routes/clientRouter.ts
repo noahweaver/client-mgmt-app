@@ -15,9 +15,6 @@ clientRouter.get("/", (req: IRequest, res: IResponse, next: NextFunction) => {
       return res.status(200).send(clients)
     })
   })
-//GET ONE Client
-
-//GET Clients by UserId
 
 //Add new Client
 clientRouter.post("/", (req: IRequest, res: IResponse, next: NextFunction) => {
@@ -36,6 +33,19 @@ clientRouter.post("/", (req: IRequest, res: IResponse, next: NextFunction) => {
     })
     console.log(`res: ${res}`)
   });
+
+//GET Clients by UserId  
+clientRouter.get("/user", (req: IRequest, res: IResponse, next: NextFunction) => {
+    Client.find({ user: req.user._id }, (err: any, clients: any) => {
+      if(err){
+        res.status(500)
+        return next(err)
+      }
+      return res.status(200).send(clients)
+    })
+  })
+
+//GET ONE Client
 
 //Update Client
 
