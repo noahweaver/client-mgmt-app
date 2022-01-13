@@ -7,7 +7,7 @@ import ClientDashboard from './pages/ClientDashboard';
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useUserContext } from './context/UserProvider';
-import Invoices from './pages/Invoices';
+import Invoices from './pages/InvoiceDashboard';
 import Client from './pages/Client';
 
 type userStateType = {
