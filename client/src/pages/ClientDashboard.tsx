@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AddClientForm from '../components/AddClientForm';
 import { useUserContext } from '../context/UserProvider';
 import { IClient } from '../../../interfaces/IClient';
+import { useNavigate } from 'react-router-dom'
 
 type clientdashboardType = {
     clients: Array<IClient>
@@ -9,8 +10,15 @@ type clientdashboardType = {
 
 const ClientDashboard: React.FC = () => {
 
+    const navigate = useNavigate()
     const [addingClientToggle, setAddingClientToggle] = useState<boolean>(false);
     const { clients } = useUserContext() as clientdashboardType;
+
+    function handleChange(e: any){
+        // const {name, value} = e.target
+        // setEditClientInput(prevInputs => ({...prevInputs, [name]: value}))
+        console.log("Clientdashboard handlechange was called")
+      }
 
     return (
         <div>
@@ -20,7 +28,9 @@ const ClientDashboard: React.FC = () => {
                 <ul>
                     {clients && clients.map(client => 
                     <li key={client._id}>
-                        <div>
+                        <div onClick={() => {
+                            navigate(`/client/${client._id}`, { state: { client }})
+                        }}>
                             <b>Client:</b> {client.firstName} {client.lastName}
                             <br></br>
                             Phone: {client.phone}
@@ -31,7 +41,11 @@ const ClientDashboard: React.FC = () => {
                 </ul>
             </div>
             {!addingClientToggle && <button onClick={() => setAddingClientToggle(prev => !prev)}>Add New Client</button>}
-            {addingClientToggle && <AddClientForm setAddingClientToggle={setAddingClientToggle}/>}
+            {addingClientToggle && 
+                <AddClientForm 
+                    setAddingClientToggle={setAddingClientToggle}
+                    handleChange={handleChange}
+                />}
         </div>
     )
 }

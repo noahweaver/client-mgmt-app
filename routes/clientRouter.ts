@@ -51,13 +51,13 @@ clientRouter.get("/user", (req: IRequest, res: IResponse, next: NextFunction) =>
 clientRouter.get("/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
     Client.find({_id: req.params.clientId},
       (err: any, client: IClient) => {
+        console.log("Client:", client)
         if(err){
           res.status(500)
           return next(err)
         }
         return res.status(200).send(client)
-      }
-      )
+      })
   });
 
 //Delete Client
