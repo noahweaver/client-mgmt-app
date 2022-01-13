@@ -8,6 +8,7 @@ import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useUserContext } from './context/UserProvider';
 import Invoices from './pages/Invoices';
+import Client from './pages/Client';
 
 type userStateType = {
   user: any,
@@ -34,6 +35,9 @@ const App: React.FC = () => {
         </Route>
         <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
           <Route path="/clientdashboard" element={<ClientDashboard />}/>
+        </Route>
+        <Route element={<ProtectedRoute token={token} rest={undefined} />}>
+          <Route  path="/client/:clientId" element={<Client />}/>
         </Route>
         <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
           <Route path="/invoices" element={<Invoices />}/>
