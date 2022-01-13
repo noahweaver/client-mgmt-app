@@ -7,8 +7,9 @@ import ClientDashboard from './pages/ClientDashboard';
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useUserContext } from './context/UserProvider';
-import Invoices from './pages/InvoiceDashboard';
+import InvoiceDashboard from './pages/InvoiceDashboard';
 import Client from './pages/Client';
+import TaskDashboard from './pages/TaskDashboard';
 
 type userStateType = {
   user: any,
@@ -40,7 +41,10 @@ const App: React.FC = () => {
           <Route  path="/client/:clientId" element={<Client />}/>
         </Route>
         <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
-          <Route path="/invoices" element={<Invoices />}/>
+          <Route path="/invoices" element={<InvoiceDashboard />}/>
+        </Route>
+        <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
+          <Route path="/tasks" element={<TaskDashboard />}/>
         </Route>
       </Routes>
       

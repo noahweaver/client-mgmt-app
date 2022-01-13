@@ -28,6 +28,11 @@ function Home() {
                     navigate('/invoices')
                     }}>Invoices</button>
             </div>
+            <div>
+            <button onClick={() => {
+                    navigate('/tasks')
+                    }}>Tasks</button>
+            </div>
             
         </div>
     )

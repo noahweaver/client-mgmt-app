@@ -24,13 +24,15 @@ export const UserProvider: React.FC = ({ children }) => {
         user: JSON.parse(localStorage.getItem("user")) || {},
         token: localStorage.getItem("token") || "",
         errMsg: "",
-        clients: []
+        clients: [],
+        tasks: []
     }
 
     const [userState, setUserState] = useState(initState)
 
     useEffect(() => {
-       getUserClients() 
+       getUserClients()
+       getOpenTasks() 
     }, [])
 
 //Signup
@@ -82,7 +84,8 @@ function logout(){
         user: {},
         token: "",
         errMsg: "",
-        clients: []
+        clients: [],
+        tasks: []
     })
 }
 
@@ -111,7 +114,11 @@ function logout(){
         //POST
         //Will need userID to be passed
     }
-        
+
+    //GET all open tasks
+    function getOpenTasks(){
+        console.log("getOpenTasks was called")
+    }
     
 
     return (
@@ -122,7 +129,8 @@ function logout(){
                 signup,
                 login,
                 logout,
-                addNewClient
+                addNewClient,
+                getOpenTasks,
             }} >
 
             {children}
