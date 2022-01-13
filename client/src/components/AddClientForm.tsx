@@ -3,14 +3,15 @@ import { useUserContext } from '../context/UserProvider'
 
 
 interface IClientFormProps {
-    setAddingClientToggle: React.Dispatch<React.SetStateAction<boolean>>
+    setAddingClientToggle: React.Dispatch<React.SetStateAction<boolean>>,
+    handleChange: (e: any) => void;
 }
 
 type clientFormType ={
     addNewClient: () => void
 }
 
-const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle }) => {
+const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, handleChange }) => {
 
     const { addNewClient } = useUserContext() as clientFormType
 
@@ -25,9 +26,9 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle }) =>
             <p>this form still needs to be built out.</p>
             <form onSubmit={handleClientAdd}>
                 <label>Name</label>
-                <input type="text" />
+                <input type="text" onChange={handleChange}/>
                 <label>Address</label>
-                <input type="text" />
+                <input type="text" onChange={handleChange}/>
                 <button type="submit">Submit</button>
             </form>
         </div>
