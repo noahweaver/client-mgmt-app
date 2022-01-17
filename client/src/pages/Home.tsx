@@ -18,6 +18,11 @@ function Home() {
     return (
         <div>
             <h1>Hello {username}!</h1>
+            {/* user card with: 
+            user info, 
+            letter avatar,
+            avatar to edit user info,
+            idk what else.  */}
             <div>
                 <button onClick={() => {
                     navigate('/clientdashboard')

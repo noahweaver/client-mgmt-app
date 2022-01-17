@@ -1,13 +1,15 @@
-import React from 'react'
-import { IInput } from '../pages/Auth'
-
+import React from 'react';
+import { IInput } from '../pages/Auth';
+import { Box, Button, Typography, InputLabel, TextField } from '@mui/material';
+import { useTheme, Theme } from '@mui/material/styles';
 interface FormProps {
     btnText: string,
     inputs: IInput,
-    errMsg?: string
+    errMsg?: string,
+    authErr: boolean,
     handleChange: (e: any) => void,
-    handleSubmit: (e: any) => void,
-}
+    handleSubmit: (e: any) => void
+};
 
 const AuthForm: React.FC<FormProps> = ({
     btnText, 
@@ -17,34 +19,54 @@ const AuthForm: React.FC<FormProps> = ({
     }, 
     errMsg, 
     handleChange, 
-    handleSubmit
+    handleSubmit,
+    authErr
 }) => {
 
-    return (
-        <div>
-            <h1>{btnText}</h1>
-            <form onSubmit={handleSubmit}>
-                <label>Username</label>    
-                <input
-                    type="text"
-                    value={username}
-                    name="username"
-                    onChange={handleChange}
-                    placeholder="Username"
-                />
-                <label>Password</label>    
-                <input 
-                    type="text"
-                    value={password}
-                    name="password"
-                    onChange={handleChange}
-                    placeholder="Password"
-                />
-                <button type="submit">{btnText}</button>
-                <p>{errMsg}</p>
-            </form>
-        </div>
-    )
-}
+    const theme: Theme = useTheme();
 
-export default AuthForm
+
+    return (
+        <Box
+            component="form"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-evenly",
+                mx: "auto",
+                height: "100%",
+                width: "75%",
+
+            }}
+            
+        >
+            <Typography variant="h4" sx={{ alignSelf: 'center', paddingTop: "15px", paddingBottom: "5px" }}>{ btnText }</Typography>
+            <Typography sx={{ textDecoration: "bold" }}>Username: </Typography>
+            <TextField
+                value={username}
+                name="username"
+                onChange={handleChange}
+                label="Username"
+                required
+                id="outlined-username"
+                error={authErr}
+            />
+            <Typography sx={{ textDecoration: "bold" }}>Password: </Typography>
+            <TextField 
+                type="password"
+                value={password}
+                name="password"
+                onChange={handleChange}
+                label="Password"
+                id="outlined-Password"
+                variant="outlined"
+                required
+                error={authErr}
+            />
+            <Typography variant="body1" sx={{ height: "5px", color: "red", textDecoration: "bold" }}>{errMsg}</Typography>
+            <Button type="submit" onClick={handleSubmit} variant="contained" sx={{ marginTop: "15px" }}>{btnText}</Button>
+        </Box>
+    )
+};
+
+export default AuthForm;

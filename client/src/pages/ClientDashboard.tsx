@@ -39,6 +39,7 @@ const ClientDashboard: React.FC = () => {
                         </div>
                     </li>)}
                 </ul>
+                {/* pagination MUI component */}
             </div>
             {!addingClientToggle && <button onClick={() => setAddingClientToggle(prev => !prev)}>Add New Client</button>}
             {addingClientToggle && 

@@ -1,10 +1,9 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom'
-import Nav from './components/Nav'
-import Home from './pages/Home'
-import Auth from './pages/Auth'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Nav from './components/Nav';
+import Home from './pages/Home';
+import Auth from './pages/Auth';
 import ClientDashboard from './pages/ClientDashboard';
-import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useUserContext } from './context/UserProvider';
 import InvoiceDashboard from './pages/InvoiceDashboard';
@@ -16,14 +15,15 @@ type userStateType = {
   token: string,
   errMsg: string,
   logout: () => void
-}
+};
 
 const App: React.FC = () => {
 
-  const { token, logout } = useUserContext() as userStateType
+  const { token, logout } = useUserContext() as userStateType;
 
   return (
     <>
+    {/* MUI css baseline? */}
       {token && <Nav logout={logout} />}
       <Routes>
         <Route 
@@ -47,8 +47,6 @@ const App: React.FC = () => {
           <Route path="/tasks" element={<TaskDashboard />}/>
         </Route>
       </Routes>
-      
-      <Footer />
     </>
   );
 }

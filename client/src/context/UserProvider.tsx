@@ -28,14 +28,15 @@ export const UserProvider: React.FC = ({ children }) => {
         tasks: []
     }
 
-    const [userState, setUserState] = useState(initState)
+    const [userState, setUserState] = useState(initState);
+    const [authErr, setAuthErr] = useState(false);
 
     useEffect(() => {
        getUserClients()
        getOpenTasks() 
-    }, [])
+    }, []);
 
-//Signup
+    //Signup
     function signup(credentials: any){
         axios.post("/authentication/signup", credentials)
             .then(res => {
@@ -49,7 +50,11 @@ export const UserProvider: React.FC = ({ children }) => {
                 }))
                 // localStorage.setItem("userState", userState)
             })
-            .catch(err => console.dir(err))
+            .catch(err => {
+                setAuthErr(true)
+                handleAuthErr(err.response.data.errMsg)
+                console.dir(err)
+            })
             // .catch(err => handleAuthErr(err.response.data.errMsg))
             // .catch(err => console.dir(err))
     }
@@ -71,23 +76,47 @@ export const UserProvider: React.FC = ({ children }) => {
                     token
                 }))
             })
-            .catch(err => console.dir(err))
+            .catch(err => {
+                console.dir(err)
+                setAuthErr(true)
+                handleAuthErr(err.response.data.errMsg)
+            })
             // .catch(err => handleAuthErr(err.response.data.errMsg))
+    };
+
+    //Auth Errors
+    function handleAuthErr(errMsg: string){
+        console.log(`Authentication Error: ${errMsg}`);
+        setAuthErr(true);
+        setUserState(prev => ({
+            ...prev,
+            errMsg
+        }))
+    };
+
+    //Reset Auth Errors
+    function restAuthErr(){
+        setAuthErr(false)
+        setUserState(prev => ({
+            ...prev,
+            errMsg: ""
+        }))
     }
-//logout
-function logout(){
-    console.log("UserProvider: logout was called")
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
-    localStorage.removeItem("User Issues")
-    setUserState({
-        user: {},
-        token: "",
-        errMsg: "",
-        clients: [],
-        tasks: []
-    })
-}
+
+    //Logout
+    function logout(){
+        console.log("UserProvider: logout was called")
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        localStorage.removeItem("User Issues")
+        setUserState({
+            user: {},
+            token: "",
+            errMsg: "",
+            clients: [],
+            tasks: []
+        })
+    }
 
     //GET USER ClIENTS
     function getUserClients(){
@@ -131,6 +160,8 @@ function logout(){
                 logout,
                 addNewClient,
                 getOpenTasks,
+                restAuthErr,
+                authErr
             }} >
 
             {children}

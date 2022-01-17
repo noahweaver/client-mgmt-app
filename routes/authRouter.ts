@@ -16,7 +16,7 @@ authRouter.post("/signup", (req: IRequest, res: IResponse, next: NextFunction) =
         }
         if(user){
             res.status(403)
-            return next(new Error("That username is already taken"))
+            return next(new Error("That username is already taken!"))
         }
         const newUser = new User(req.body)
         newUser.save((err: any, savedUser: any) => {
@@ -40,16 +40,16 @@ User.findOne({ username: req.body.username.toLowerCase() }, (err: any, user: any
     }
     if(!user){
         res.status(403)
-        return next(new Error("Username or Password are incorrect"))
+        return next(new Error("Username or Password are incorrect!"))
     }
     user.checkPassword(req.body.password, (err: any, isMatch: boolean) => {
         if(err){
             res.status(403)
-            return next(new Error("Username or Password are incorrect"))
+            return next(new Error("Username or Password are incorrect!"))
         }
         if(!isMatch){
             res.status(403)
-            return next(new Error("Username or Password are incorrect"))
+            return next(new Error("Username or Password are incorrect!"))
         }
     const token = jwt.sign(user.withoutPassword(), process.env.SECRET)
     return res.status(200).send({ token, user: user.withoutPassword() })
