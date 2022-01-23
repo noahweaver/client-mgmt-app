@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext} from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import { IClient } from '../../../interfaces/IClient';
-import EditClientForm from '../components/EditClientForm'
+import EditClientForm from './EditClientForm'
 
 const userAxios = axios.create();
 
@@ -14,6 +14,10 @@ userAxios.interceptors.request.use(config => {
     return config;
 });
 
+
+//CONVERT TO MODAL
+    //Move functions to parent? Client dashboard?
+    
 
 const Client: React.FC = () => {
 

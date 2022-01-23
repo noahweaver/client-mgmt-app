@@ -7,7 +7,7 @@ import ClientDashboard from './pages/ClientDashboard';
 import ProtectedRoute from './components/ProtectedRoute'
 import { useUserContext } from './context/UserProvider';
 import InvoiceDashboard from './pages/InvoiceDashboard';
-import Client from './pages/Client';
+import Client from './components/ClientModal';
 import TaskDashboard from './pages/TaskDashboard';
 
 type userStateType = {

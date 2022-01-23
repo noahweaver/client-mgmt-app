@@ -22,12 +22,13 @@ const ClientDashboard: React.FC = () => {
 
     return (
         <div>
-            <h1>CLIENT DASHBOARD</h1>
+            <h1>ROLODEX</h1>
             <div>
                 <p>Client List</p>
                 <ul>
                     {clients && clients.map(client => 
                     <li key={client._id}>
+                        {/* may not need to navigate if using modal */}
                         <div onClick={() => {
                             navigate(`/client/${client._id}`, { state: { client }})
                         }}>
