@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import { IClient } from '../../../interfaces/IClient';
 import EditClientForm from './EditClientForm'
+import { Modal } from '@mui/material';
 
 const userAxios = axios.create();
 
@@ -22,7 +23,7 @@ userAxios.interceptors.request.use(config => {
 const Client: React.FC = () => {
 
     const [client, setClient] = useState<IClient | undefined>();
-    const [editClient, setEditClient] = useState<boolean>(false)
+    const [editClient, setEditClient] = useState(false)
     const [editClientInput, setEditClientInput] = useState()
     const { clientId } = useParams();
 
@@ -57,21 +58,25 @@ const Client: React.FC = () => {
 
 
     return (
-        <div>
-            {client && 
-            <h1>{client.firstName} {client.lastName}</h1>
-            }
-            <br></br>
-            {`Client ID: ${clientId}`}
-            <button onClick={() => setEditClient(prev => !prev)}>
-                {!editClient ? "Edit Client Info" : "cancel"}
-            </button>
-            {editClient && 
-            <EditClientForm 
-                handleChange={handleChange} 
-                setEditClient={setEditClient}
-            />}
-        </div>
+        <>
+        </>
+        // <Modal
+        
+        // >
+        //     {client && 
+        //     <h1>{client.firstName} {client.lastName}</h1>
+        //     }
+        //     <br></br>
+        //     {`Client ID: ${clientId}`}
+        //     <button onClick={() => setEditClient(prev => !prev)}>
+        //         {!editClient ? "Edit Client Info" : "cancel"}
+        //     </button>
+        //     {editClient && 
+        //     <EditClientForm 
+        //         handleChange={handleChange} 
+        //         setEditClient={setEditClient}
+        //     />}
+        // </Modal>
     );
 };
 
