@@ -138,10 +138,17 @@ export const UserProvider: React.FC = ({ children }) => {
     }
 
     //ADD NEW CLIENT 
-    function addNewClient(){
+    function addNewClient(newClient: any){
         console.log("Add New Client was called")
-        //POST
-        //Will need userID to be passed
+        userAxios.post('/api/client', newClient)
+            .then(res => {
+                //@ts-ignore
+                setUserState(prevState => ({
+                    ...prevState,
+                    clients: [...prevState.clients, res.data]
+                }))
+            })
+            .catch(err => console.log(err.response.data.errMsg))
     }
 
     //GET all open tasks

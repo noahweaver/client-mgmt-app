@@ -1,20 +1,10 @@
-import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps } from '@mui/material'
-import React from 'react'
-import { useUserContext } from '../context/UserProvider'
+import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps } from '@mui/material';
+import React, { useState, useContext } from 'react';
+import { useUserContext } from '../context/UserProvider';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme, Theme } from '@mui/material/styles';
-
-
-
-interface IClientFormProps {
-    setAddingClientToggle: (value: React.SetStateAction<boolean>) => void ,
-    addingClient: boolean,
-    handleChange: (e: any) => void
-}
-
-type clientFormType ={
-    addNewClient: () => void
-}
+import { IClient } from '../../../interfaces/IClient';
+import { userInfo } from 'os';
 
 const RedditTextField = styled((props: TextFieldProps) => (
     <TextField
@@ -46,25 +36,82 @@ const RedditTextField = styled((props: TextFieldProps) => (
     },
   }));
 
+  interface IClientFormProps {
+    setAddingClientToggle: (value: React.SetStateAction<boolean>) => void ,
+    addingClient: boolean,
+}
 
+type clientFormType ={
+    addNewClient: (newClient: any) => void
+    user: {
+        _id: string
+    }
+}
 
-const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addingClient, handleChange }) => {
+export interface IAddClientForm {
+    firstName: string;
+    lastName: string;
+    address: string;
+    phone: string;
+    altPhone?: string;
+    email: string;
+    moneyOwed: boolean;
+    userId: string;
+    notes: string;
+}
 
-    const { addNewClient } = useUserContext() as clientFormType;
-    const theme: Theme = useTheme();
+const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addingClient }) => {
+
     
-    const DialogHeaderStyle = {
+    const { addNewClient, user: { _id } } = useUserContext() as clientFormType;
+    const theme: Theme = useTheme();
+
+    const initInputs = {
+        firstName: "",
+        lastName: "",
+        address: "",
+        phone: "",
+        altPhone: "",
+        email: "",
+        notes: "",
+        userId: _id,
+        moneyOwed: false,
+        }
+
+    const [newClient, setNewClient] = useState<IAddClientForm>(initInputs);
+
+    
+
+    
+    const DialogStyle = {
         dialogTitle: {
             backgroundColor: theme.palette.primary.main,
             color: '#ffff'
+        },
+        button: {
+            gridColumn: 'span 2',
+            width: '50%',
+            marginLeft: '25%',
+            '&:hover': {
+                backgroundColor: theme.palette.primary.main,
+                color: '#ffff'
+            }
         }
+    }
+
+    function handleChange(e: any){
+        const {name, value} = e.target;
+        setNewClient(prevInputs => ({
+            ...prevInputs,
+            [name]: value
+        }))
     }
 
 
     function handleClientAdd(e: any){
         e.preventDefault();
         setAddingClientToggle(false);
-        addNewClient();
+        addNewClient(newClient);
     }
 
     return (
@@ -72,7 +119,7 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
             open={addingClient}
         >
             <DialogTitle
-                sx={ DialogHeaderStyle.dialogTitle }
+                sx={ DialogStyle.dialogTitle }
             >Adding New Client
                 <IconButton
                 aria-label="close"
@@ -102,35 +149,57 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
                             required
                             onChange={handleChange}
                             label="First name"
-                            id="reddit-input"/>
+                            id="reddit-input"
+                            name="firstName"
+                            value={newClient.firstName}/>
                         <RedditTextField 
                         id="reddit-input"   
                             required
                             onChange={handleChange}
-                            label="Last name"/>
+                            label="Last name"
+                            name="lastName"
+                            value={newClient.lastName}/>
                         <RedditTextField 
                             required
                             onChange={handleChange}
-                            label="Address"/>
+                            label="Address"
+                            name="address"
+                            value={newClient.address}/>
                         <RedditTextField 
                             required
                             onChange={handleChange}
                             label="Phone Number"
+                            name="phone"
+                            value={newClient.phone}
                         />
                         <RedditTextField 
                             onChange={handleChange}
                             label="Alternate Phone Number"
+                            name="altPhone"
+                            value={newClient.altPhone}
                         />
                         <RedditTextField 
                             required
                             onChange={handleChange}
                             label="Email"
+                            name="email"
+                            value={newClient.email}
                         />
-
+                        <RedditTextField 
+                        onChange={handleChange}
+                        label="Notes"
+                        multiline
+                        rows={4}
+                        name="notes"
+                        value={newClient.notes}
+                        style={{ gridColumn: '1 / span 2'}}
+                        />
                         <Button 
                             type="submit" 
                             variant="outlined" 
-                            onClick={handleClientAdd}>
+                            onClick={handleClientAdd}
+                            sx={DialogStyle.button}
+                            >
                             Submit
                         </Button>
                 </Box>

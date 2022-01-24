@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 import EditClientform from '../components/EditClientForm';
 import { Button, Modal, Dialog, DialogTitle, DialogContent, Typography, IconButton, DialogActions, styled } from '@mui/material';
+import { useTheme, Theme } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 
 type clientdashboardType = {
@@ -39,6 +40,9 @@ export interface DialogTitleProps {
   
 const BootstrapDialogTitle = (props: DialogTitleProps) => {
     const { children, onClose, ...other } = props;
+    const theme: Theme = useTheme();
+
+    
 
     return (
         <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
@@ -70,6 +74,16 @@ const ClientDashboard: React.FC = () => {
     const [openClient, setOpenClient] = useState(false);
     const [currentClient, setCurrentClient] = useState<IClient | undefined>();
     const { clients } = useUserContext() as clientdashboardType;
+    const theme: Theme = useTheme();
+
+    const buttonStyle = {
+        button: {
+            '&:hover': {
+                backgroundColor: theme.palette.primary.main,
+                color: '#ffff'
+            }
+        }
+    }
 
     function handleOpen(client: IClient){
         setCurrentClient(client);
@@ -105,15 +119,20 @@ const ClientDashboard: React.FC = () => {
 
     return (
         <div>
-            <h1>ROLODEX</h1>
+            <Typography variant='h2'>ROLODEX</Typography>
             <div>
                 <p>Client List</p>
-                {!addingClientToggle && <Button variant="outlined" onClick={() => setAddingClientToggle(prev => !prev)}>Add New Client</Button>}
+                {!addingClientToggle && 
+                <Button 
+                    variant="outlined" 
+                    onClick={() => setAddingClientToggle(prev => !prev)} 
+                    sx={buttonStyle.button}>
+                    Add New Client
+                </Button>}
                 {addingClientToggle && 
                 <AddClientForm 
                 //@ts-ignore
                     setAddingClientToggle={setAddingClientToggle}
-                    handleChange={handleChange}
                     addingClient={addingClientToggle}
                 />}
                 <ul>
@@ -146,9 +165,9 @@ const ClientDashboard: React.FC = () => {
                     <DialogContent>
                         <Typography><b>Address: </b> {currentClient?.address}</Typography>
                         <Typography><b>Phone: </b>{currentClient?.phone}</Typography>
-                        <Typography><b>a</b></Typography>
-                        <Typography><b>b</b></Typography>
-                        <Typography><b>c</b></Typography>
+                        <Typography><b>Email: </b>{currentClient?.email}</Typography>
+                        <Typography><b>Notes: </b>{currentClient?.notes}</Typography>
+                        <Typography><b>Alternate Phone: </b>{currentClient?.altPhone}</Typography>
                     </DialogContent>
                     <DialogActions>
                         <Button autoFocus onClick={handleClose}>
