@@ -9,6 +9,7 @@ import { RedditTextField } from './RedditTextField';
 interface Props {
     client: IClient | undefined,
     toggleEdit: React.Dispatch<React.SetStateAction<boolean>>,
+    handleEdit: (updatedClient: IClient | undefined) => void
 }
 
 export const EditClientForm: React.FC<Props> = (props) => {
@@ -40,9 +41,8 @@ export const EditClientForm: React.FC<Props> = (props) => {
 
     function handleEdit(e: any){
         e.preventDefault();
+        props.handleEdit(inputs);
         props.toggleEdit((prev: boolean) => !prev);
-        //submitEdit()
-            //submit state
     }
 
     function handleChange(e: any){

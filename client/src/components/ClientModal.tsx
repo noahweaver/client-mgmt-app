@@ -24,7 +24,8 @@ interface Props {
     onClose: () => void, 
     currentClient: IClient | undefined,
     openClient: boolean,
-    handleDelete: () => void
+    handleDelete: () => void,
+    handleEdit: (updatedClient: IClient| undefined) => void
 }   
 
 const Client: React.FC<Props> = (props) => {
@@ -102,6 +103,7 @@ const Client: React.FC<Props> = (props) => {
             <EditClientForm 
                 client={props.currentClient}
                 toggleEdit={(prev: any) => setIsEditing((prev: any) => !prev)}
+                handleEdit={props.handleEdit}
             />
             </>
             }

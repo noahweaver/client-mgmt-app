@@ -14,6 +14,7 @@ import ClientModal from '../components/ClientModal';
 type clientdashboardType = {
     clients: Array<IClient>,
     deleteClient: (client: IClient | undefined) => void,
+    updateClient: (updatedClient: IClient | undefined) => void
 };
 
 const userAxios = axios.create();
@@ -33,7 +34,7 @@ const ClientDashboard: React.FC = () => {
     const [openClient, setOpenClient] = useState(false);
     const [currentClient, setCurrentClient] = useState<IClient | undefined>();
 
-    const { clients, deleteClient } = useUserContext() as clientdashboardType;
+    const { clients, deleteClient, updateClient } = useUserContext() as clientdashboardType;
     const theme: Theme = useTheme();
 
     const buttonStyle = {
@@ -82,6 +83,11 @@ const ClientDashboard: React.FC = () => {
         setOpenClient(false);
     }
 
+    function handleEdit(updatedClient: IClient | undefined) {
+        updateClient(updatedClient);
+        setCurrentClient(updatedClient);
+    }
+
 
     return (
         <div>
@@ -126,6 +132,7 @@ const ClientDashboard: React.FC = () => {
                         currentClient={currentClient}
                         openClient={openClient}
                         handleDelete={handleDelete}
+                        handleEdit={handleEdit}
                     />
                 }
         </div>

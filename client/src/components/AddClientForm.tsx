@@ -1,4 +1,4 @@
-import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps } from '@mui/material';
+import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery } from '@mui/material';
 import React, { useState, useContext } from 'react';
 import { useUserContext } from '../context/UserProvider';
 import CloseIcon from '@mui/icons-material/Close';
@@ -80,10 +80,13 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
         setAddingClientToggle(false);
         addNewClient(newClient);
     }
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+
 
     return (
         <Dialog
             open={addingClient}
+            fullScreen={fullScreen}
         >
             <DialogTitle
                 sx={ DialogStyle.dialogTitle }

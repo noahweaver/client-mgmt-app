@@ -163,6 +163,16 @@ export const UserProvider: React.FC = ({ children }) => {
             .catch((err) => console.log(err));
     }
 
+     //UPDATE client
+     function updateClient(updatedClient: any){
+        console.log("delete client", updatedClient)
+        userAxios.put(`/api/client/${updatedClient?._id}`, updatedClient)
+            .then(res => {
+                getUserClients()
+            })
+            .catch((err) => console.log(err));
+    }
+
     //GET all open tasks
     function getOpenTasks(){
         console.log("getOpenTasks was called")
@@ -181,6 +191,7 @@ export const UserProvider: React.FC = ({ children }) => {
                 getOpenTasks,
                 restAuthErr,
                 deleteClient,
+                updateClient,
                 authErr
             }} >
 
