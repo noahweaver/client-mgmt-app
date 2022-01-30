@@ -5,12 +5,15 @@ import { IClient } from '../../../interfaces/IClient';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 import EditClientform from '../components/EditClientForm';
-import { Button, Modal, Dialog, DialogTitle, DialogContent, Typography, IconButton, DialogActions, styled } from '@mui/material';
+import { Button, Typography} from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
+import ClientModal from '../components/ClientModal';
+
 
 type clientdashboardType = {
-    clients: Array<IClient>
+    clients: Array<IClient>,
+    deleteClient: (client: IClient | undefined) => void,
 };
 
 const userAxios = axios.create();
@@ -21,51 +24,7 @@ userAxios.interceptors.request.use(config => {
         config.headers.Authorization = `Bearer ${token}`
     }
     return config;
-});
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-      padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-      padding: theme.spacing(1),
-    },
-  }));
-  
-export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-  }
-  
-const BootstrapDialogTitle = (props: DialogTitleProps) => {
-    const { children, onClose, ...other } = props;
-    const theme: Theme = useTheme();
-
-    
-
-    return (
-        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-          {children}
-          {onClose ? (
-            <IconButton
-              aria-label="close"
-              onClick={onClose}
-              sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500],
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          ) : null}
-        </DialogTitle>
-      );
-    };
-  
-
+});  
 
 const ClientDashboard: React.FC = () => {
 
@@ -73,7 +32,8 @@ const ClientDashboard: React.FC = () => {
     const [addingClientToggle, setAddingClientToggle] = useState(false);
     const [openClient, setOpenClient] = useState(false);
     const [currentClient, setCurrentClient] = useState<IClient | undefined>();
-    const { clients } = useUserContext() as clientdashboardType;
+
+    const { clients, deleteClient } = useUserContext() as clientdashboardType;
     const theme: Theme = useTheme();
 
     const buttonStyle = {
@@ -87,7 +47,7 @@ const ClientDashboard: React.FC = () => {
 
     function handleOpen(client: IClient){
         setCurrentClient(client);
-        getSingleClient();
+        // getSingleClient();
         setOpenClient(true);
     }
 
@@ -109,11 +69,17 @@ const ClientDashboard: React.FC = () => {
         userAxios.get(`/api/client/${currentClient?._id}`)
           .then(res => {
               console.log(res.data)
-              //@ts-ignore
-              setCurrentClient(...res.data)
+              setCurrentClient({...res.data})
           })
           .then(() => console.log(currentClient))
           .catch((err: any)=> console.log(err))
+    }
+
+    function handleDelete() {
+        console.log("handleDelete was called");
+        deleteClient(currentClient);
+        setCurrentClient(undefined);
+        setOpenClient(false);
     }
 
 
@@ -148,35 +114,22 @@ const ClientDashboard: React.FC = () => {
                             <br></br>
                             Address: {client.address}
                             <Button 
-                            type="button" onClick={() => handleOpen(client)}>Open</Button>
+                            type="button" onClick={() => {handleOpen(client); setOpenClient(true); }}>Open</Button>
                         </div>
                     </li>)}
                 </ul>
-                {/* pagination MUI component */}
+                {/* pagination MUI component? */}
             </div>
-                <BootstrapDialog
-                    open={openClient}
-                    onClose={handleClose}
-                    aria-labelledby="customized-dialog-title">
-                    <BootstrapDialogTitle 
-                        id="customized-dialog-title" 
-                        onClose={handleClose}>
-                        {currentClient?.firstName}{currentClient?.lastName}</BootstrapDialogTitle>
-                    <DialogContent>
-                        <Typography><b>Address: </b> {currentClient?.address}</Typography>
-                        <Typography><b>Phone: </b>{currentClient?.phone}</Typography>
-                        <Typography><b>Email: </b>{currentClient?.email}</Typography>
-                        <Typography><b>Notes: </b>{currentClient?.notes}</Typography>
-                        <Typography><b>Alternate Phone: </b>{currentClient?.altPhone}</Typography>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleClose}>
-                            Save changes
-                        </Button>
-                    </DialogActions>
-                </BootstrapDialog>
+                {openClient && 
+                    <ClientModal 
+                        onClose={() => {handleClose(); }}
+                        currentClient={currentClient}
+                        openClient={openClient}
+                        handleDelete={handleDelete}
+                    />
+                }
         </div>
-    )
+    );
 }
 
 export default ClientDashboard

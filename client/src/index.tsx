@@ -6,7 +6,7 @@ import './styles/StyleWeaver.css'
 import App from './App';
 import { UserProvider } from './context/UserProvider';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './context/Theme'
+import themeCM from './context/ThemeCM'
 import './styles/styles.css'
 
 
@@ -14,7 +14,7 @@ import './styles/styles.css'
 
 ReactDOM.render(
   <Router>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themeCM}>
     <UserProvider>
       <App />
     </UserProvider>

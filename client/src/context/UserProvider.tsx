@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { IClient } from '../../../interfaces/IClient';
 const userAxios = axios.create()
 
 
@@ -30,6 +31,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
     const [userState, setUserState] = useState(initState);
     const [authErr, setAuthErr] = useState(false);
+
 
     useEffect(() => {
        getUserClients()
@@ -151,6 +153,16 @@ export const UserProvider: React.FC = ({ children }) => {
             .catch(err => console.log(err.response.data.errMsg))
     }
 
+     //DELETE client
+     function deleteClient(client: any){
+        console.log("delete client", client)
+        userAxios.delete(`/api/client/${client?._id}`)
+            .then(res => {
+                getUserClients()
+            })
+            .catch((err) => console.log(err));
+    }
+
     //GET all open tasks
     function getOpenTasks(){
         console.log("getOpenTasks was called")
@@ -168,6 +180,7 @@ export const UserProvider: React.FC = ({ children }) => {
                 addNewClient,
                 getOpenTasks,
                 restAuthErr,
+                deleteClient,
                 authErr
             }} >
 

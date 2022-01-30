@@ -37,9 +37,6 @@ const App: React.FC = () => {
         <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
           <Route path="/clientdashboard" element={<ClientDashboard />}/>
         </Route>
-        <Route element={<ProtectedRoute token={token} rest={undefined} />}>
-          <Route  path="/client/:clientId" element={<Client />}/>
-        </Route>
         <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
           <Route path="/invoices" element={<InvoiceDashboard />}/>
         </Route>

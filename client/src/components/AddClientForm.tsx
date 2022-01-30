@@ -5,36 +5,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme, Theme } from '@mui/material/styles';
 import { IClient } from '../../../interfaces/IClient';
 import { userInfo } from 'os';
+import { RedditTextField } from './RedditTextField'; 
 
-const RedditTextField = styled((props: TextFieldProps) => (
-    <TextField
-      InputProps={{ disableUnderline: true } as Partial<OutlinedInputProps>}
-      {...props}
-    />
-  ))(({ theme }) => ({
-      border: '1px solid #000',
-      borderRadius: 4,
-      backgroundColor: '#00000025',
-    '& .MuiFilledInput-root': {
-      border: '1px solid #e2e2e1',
-      overflow: 'hidden',
-      borderRadius: 4,
-      backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-      transition: theme.transitions.create([
-        'border-color',
-        'background-color',
-        'box-shadow',
-      ]),
-      '&:hover': {
-        backgroundColor: 'transparent',
-      },
-      '&.Mui-focused': {
-        backgroundColor: 'transparent',
-        boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  }));
 
   interface IClientFormProps {
     setAddingClientToggle: (value: React.SetStateAction<boolean>) => void ,
@@ -62,27 +34,9 @@ export interface IAddClientForm {
 
 const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addingClient }) => {
 
-    
     const { addNewClient, user: { _id } } = useUserContext() as clientFormType;
     const theme: Theme = useTheme();
 
-    const initInputs = {
-        firstName: "",
-        lastName: "",
-        address: "",
-        phone: "",
-        altPhone: "",
-        email: "",
-        notes: "",
-        userId: _id,
-        moneyOwed: false,
-        }
-
-    const [newClient, setNewClient] = useState<IAddClientForm>(initInputs);
-
-    
-
-    
     const DialogStyle = {
         dialogTitle: {
             backgroundColor: theme.palette.primary.main,
@@ -99,6 +53,20 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
         }
     }
 
+    const initInputs = {
+        firstName: "",
+        lastName: "",
+        address: "",
+        phone: "",
+        altPhone: "",
+        email: "",
+        notes: "",
+        userId: _id,
+        moneyOwed: false,
+        }
+
+    const [newClient, setNewClient] = useState<IAddClientForm>(initInputs);
+
     function handleChange(e: any){
         const {name, value} = e.target;
         setNewClient(prevInputs => ({
@@ -106,7 +74,6 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
             [name]: value
         }))
     }
-
 
     function handleClientAdd(e: any){
         e.preventDefault();
@@ -205,6 +172,6 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
                 </Box>
             </DialogContent>
         </Dialog>
-    )
+    );
 }
 export default AddClientForm;

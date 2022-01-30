@@ -1,7 +1,6 @@
 import React from 'react';
 import { IInput } from '../pages/Auth';
-import { Box, Button, Typography, InputLabel, TextField } from '@mui/material';
-import { useTheme, Theme } from '@mui/material/styles';
+import { Box, Button, Typography, InputLabel, TextField, useMediaQuery, Theme, useTheme } from '@mui/material';
 interface FormProps {
     btnText: string,
     inputs: IInput,
@@ -24,6 +23,7 @@ const AuthForm: React.FC<FormProps> = ({
 }) => {
 
     const theme: Theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
 
     return (
@@ -35,8 +35,7 @@ const AuthForm: React.FC<FormProps> = ({
                 justifyContent: "space-evenly",
                 mx: "auto",
                 height: "100%",
-                width: "75%",
-
+                width: "75%"
             }}
             
         >

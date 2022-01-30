@@ -3,7 +3,7 @@ import { createTheme } from '@material-ui/core/styles';
 import { black } from 'material-ui/styles/colors';
 
 
-const theme = {
+const themeCM = {
   palette: {
     type: 'light',
     primary: {
@@ -51,11 +51,11 @@ const theme = {
 } as const; 
 
 type CustomTheme = {
-  [Key in keyof typeof theme]: typeof theme[Key]
+  [Key in keyof typeof themeCM]: typeof themeCM[Key]
 }
 declare module '@material-ui/core/styles/createTheme' {
   interface Theme extends CustomTheme { }
   interface ThemeOptions extends CustomTheme { }
 }
 
-export default createTheme(theme);
+export default createTheme(themeCM);
