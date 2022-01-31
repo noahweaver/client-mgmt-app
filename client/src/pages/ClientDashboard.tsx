@@ -40,9 +40,10 @@ const ClientDashboard: React.FC = () => {
 
     const buttonStyle = {
         button: {
+            margin: '25px 0 10px 25px',
             '&:hover': {
                 backgroundColor: theme.palette.primary.main,
-                color: '#ffff'
+                color: '#ffff',
             }
         }
     }
@@ -93,9 +94,8 @@ const ClientDashboard: React.FC = () => {
 
     return (
         <div>
-            <Typography variant='h2'>ROLODEX</Typography>
+            <Typography variant='h2' sx={{ m: '25px 0 0 25px'}}>ROLODEX</Typography>
             <div>
-                <p>Client List</p>
                 {!addingClientToggle && 
                 <Button 
                     variant="outlined" 
