@@ -8,7 +8,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { BootstrapDialog, BootstrapDialogTitle } from './BootstrapDialog';
-import { Fullscreen } from '@mui/icons-material';
 
 const userAxios = axios.create();
 
@@ -80,7 +79,7 @@ const Client: React.FC<Props> = (props) => {
             <BootstrapDialogTitle 
                 id="customized-dialog-title" 
                 onClose={props.onClose}>
-                {props.currentClient?.firstName}{props.currentClient?.lastName}
+                {props.currentClient?.firstName} {props.currentClient?.lastName}
             </BootstrapDialogTitle>
             <DialogContent>
                 <Typography><b>Address: </b> {props.currentClient?.address}</Typography>

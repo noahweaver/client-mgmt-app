@@ -5,10 +5,11 @@ import { IClient } from '../../../interfaces/IClient';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 import EditClientform from '../components/EditClientForm';
-import { Button, Typography} from '@mui/material';
+import { Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography, useMediaQuery, Container} from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import ClientModal from '../components/ClientModal';
+import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
 
 
 type clientdashboardType = {
@@ -88,6 +89,7 @@ const ClientDashboard: React.FC = () => {
         setCurrentClient(updatedClient);
     }
 
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
     return (
         <div>
@@ -107,23 +109,42 @@ const ClientDashboard: React.FC = () => {
                     setAddingClientToggle={setAddingClientToggle}
                     addingClient={addingClientToggle}
                 />}
-                <ul>
-                    {/* default alphabetical */}
+                <Container maxWidth="md" sx={{ padding: 0, width: '100vw'}} >
+                    <Table>
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell align="left">Open</StyledTableCell>
+                            <StyledTableCell align="left">Client</StyledTableCell>
+                            <StyledTableCell align="left">Phone</StyledTableCell>
+                            <StyledTableCell align="left">Address</StyledTableCell>
+                            <StyledTableCell align="left">Money Owed</StyledTableCell>
+                            <StyledTableCell align="left">Invoices</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {/* defaContainert alphabetical */}
                     {/* add other filters, recent invoices added? */}
                     {/* search bar to search by name or address */}
                     {clients && clients.map((client: IClient) => 
-                    <li key={client._id}>
-                        <div>
-                            <b>Client:</b> {client.firstName} {client.lastName}
-                            <br></br>
-                            Phone: {client.phone}
-                            <br></br>
-                            Address: {client.address}
+                    <StyledTableRow key={client._id}>
+                        <StyledTableCell>
                             <Button 
-                            type="button" onClick={() => {handleOpen(client); setOpenClient(true); }}>Open</Button>
-                        </div>
-                    </li>)}
-                </ul>
+                                type="button" 
+                                onClick={() => {handleOpen(client); setOpenClient(true); }}>
+                                Open
+                            </Button>
+                        </StyledTableCell>
+                        <StyledTableCell>{client.firstName} {client.lastName}</StyledTableCell>
+                        <StyledTableCell>{client.phone}</StyledTableCell>
+                        <StyledTableCell>{client.address}</StyledTableCell>
+                        <StyledTableCell>{client.moneyOwed ? "Yes" : "No"}</StyledTableCell>
+                        <StyledTableCell onClick={() => { }}>{client.invoices?.length}</StyledTableCell>
+                        
+                    </StyledTableRow>
+                    )}
+                    </TableBody>
+                    </Table>
+                </Container>
                 {/* pagination MUI component? */}
             </div>
                 {openClient && 
