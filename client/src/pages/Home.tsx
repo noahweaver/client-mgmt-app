@@ -1,6 +1,6 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-
+import { Box, Grid, Paper, styled, Typography, Theme, useTheme } from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../context/UserProvider'
 
 type homeUserState = {
@@ -9,37 +9,74 @@ type homeUserState = {
     }
 }
 
-function Home() {
+const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.h6,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    wrap: 'nowrap',
+    [theme.breakpoints.up('sm')]: {
+        height: '200px',
+        width: '75%'
+    },
+    [theme.breakpoints.up('md')]: {
+        height: '200px',
+        width: '50%'
+    },
+    }));
 
-    const navigate = useNavigate()
 
-    const { user: { username } } = useUserContext() as homeUserState
+
+const Home: React.FC = () => {
+
+    const navigate = useNavigate();
+    const { user: { username } } = useUserContext() as homeUserState;
+    const theme: Theme = useTheme();
+
+    const style = {
+        container: {        
+            backgroundColor: theme.palette.primary.light,
+            border: `${theme.palette.primary.main} 2px solid`,
+            borderRadius: theme.shape.borderRadius,
+            mx: "auto",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            boxShadow: 12,
+            color: theme.palette.primary.dark,
+            cursor: "pointer",
+        }
+    };
+
 
     return (
-        <div>
-            <h1>Hello {username}!</h1>
+        <Box sx={{ width: '100%'}}>
+            <Typography variant="h5" >Hello {username}!</Typography>
             {/* user card with: 
             user info, 
             letter avatar,
             avatar to edit user info,
             idk what else.  */}
-            <div>
-                <button onClick={() => {
+            <Grid container sx={{ paddingTop: '50px', paddingBottom: '50px'}} spacing={{ xs: 1, sm: 2, md: 2, lg: 2 }}>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                    <Item sx={style.container} onClick={() => {
                     navigate('/clientdashboard')
-                    }}>Client Dashboard</button>
-            </div>
-            <div>
-                <button onClick={() => {
+                    }}> Client Dashboard </Item>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                    <Item sx={style.container} onClick={() => {
                     navigate('/invoices')
-                    }}>Invoices</button>
-            </div>
-            <div>
-            <button onClick={() => {
+                    }}> Invoices (COMING SOON!) </Item>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                    <Item sx={style.container} onClick={() => {
                     navigate('/tasks')
-                    }}>Tasks</button>
-            </div>
-            
-        </div>
+                    }}> Tasks (COMING SOON!) </Item>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                    <Item sx={style.container}> Some other feature </Item>
+                </Grid>
+            </Grid>
+        </Box>
     )
 }
 

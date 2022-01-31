@@ -25,6 +25,8 @@ const AuthForm: React.FC<FormProps> = ({
     const theme: Theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
+    
+
 
     return (
         <Box
