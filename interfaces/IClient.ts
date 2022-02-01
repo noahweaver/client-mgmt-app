@@ -16,5 +16,4 @@ export interface IClient {
         ref: "User"
     };
     notes?: string;
-    _id?: string;
 };

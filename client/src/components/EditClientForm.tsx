@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SaveIcon from '@mui/icons-material/Save';
 import { IClient } from '../../../interfaces/IClient';
-import { DialogTitle, DialogContent, DialogActions, IconButton, Button, Box, TextField, Theme, useTheme } from '@mui/material';
+import { DialogTitle, DialogContent, DialogActions, IconButton, Button, Box, TextField, Theme, useTheme, FormControl, FormControlLabel, FormGroup, Checkbox } from '@mui/material';
 import { BootstrapDialog, BootstrapDialogTitle } from './BootstrapDialog';
 import { RedditTextField } from './RedditTextField'; 
 
@@ -18,7 +18,8 @@ export const EditClientForm: React.FC<Props> = (props) => {
     const DialogStyle = {
         dialogTitle: {
             backgroundColor: theme.palette.primary.main,
-            color: '#ffff'
+            color: '#ffff',
+            marginBottom: '25px'
         },
         button: {
             gridColumn: 'span 2',
@@ -41,17 +42,17 @@ export const EditClientForm: React.FC<Props> = (props) => {
 
     function handleEdit(e: any){
         e.preventDefault();
+        //@ts-ignore
         props.handleEdit(inputs);
         props.toggleEdit((prev: boolean) => !prev);
     }
 
     function handleChange(e: any){
         setIsChanged(true);
-        const { name, value } = e.target
+        const { name, value, checked } = e.target
         //@ts-ignore
         setInputs((prevInputs: IClient) => ({...prevInputs, [name]: value}));
     }
-
 
     return (
         <>
@@ -59,7 +60,6 @@ export const EditClientForm: React.FC<Props> = (props) => {
             Editing <b>{props.client?.firstName} {props.client?.lastName}</b>
         </DialogTitle>
         <DialogContent>
-            <p>this form still needs to be built out.</p>
         <Box
             component="form"
             sx={{
@@ -110,13 +110,23 @@ export const EditClientForm: React.FC<Props> = (props) => {
                 name="email"
                 value={inputs?.email}/>
             <RedditTextField 
-            onChange={handleChange}
-            helperText="Notes"
-            multiline
-            rows={4}
-            name="notes"
-            value={inputs?.notes}
-            style={{ gridColumn: '1 / span 2'}}/>
+                onChange={handleChange}
+                helperText="Notes"
+                multiline
+                rows={4}
+                name="notes"
+                value={inputs?.notes}
+                style={{ gridColumn: '1 / span 2'}}/>
+            <FormGroup>
+                <FormControlLabel 
+                    control={<Checkbox 
+                        defaultChecked={props.client?.moneyOwed} 
+                        //@ts-ignore
+                        onChange={(e: any) => setInputs((prevState: IClient) => ({...prevState, moneyOwed: e.target.checked}))} 
+                        value={inputs?.moneyOwed} 
+                        />} 
+                    label={`${props.client?.firstName} ${props.client?.lastName} is currently in an 'unpaid' status`} />
+            </FormGroup>
             <Button 
                 type="submit" 
                 variant="outlined" 

@@ -50,7 +50,7 @@ clientRouter.get("/user", (req: IRequest, res: IResponse, next: NextFunction) =>
 //A user can GET a client that isn't theirs if they have the ID
 clientRouter.get("/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
     Client.find({_id: req.params.clientId},
-      (err: any, client: IClient) => {
+      (err: any, client: any) => {
         console.log("Client:", client)
         if(err){
           res.status(500)

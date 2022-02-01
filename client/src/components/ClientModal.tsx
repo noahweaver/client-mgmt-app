@@ -39,27 +39,8 @@ const Client: React.FC<Props> = (props) => {
 
     //useEffect
     useEffect(() => {
-        getSingleClient();
         setClient(props.currentClient);
     }, []);
-
-      //GET Single Client by Params
-      function getSingleClient(){
-          console.log("getSingleClient was called")
-          console.log("clientId:", clientId)
-          userAxios.get(`/api/client/${clientId}`)
-            .then(res => {
-                console.log(res.data)
-                //@ts-ignore
-                setClient(...res.data)
-            })
-            .then(() => console.log(client))
-            .catch((err: any)=> console.log(err))
-      }
-
-      //Axios PUT function for edit client info
-        //reset state to initInputs (this will either be all empty strings or the client's info) after PUT
-
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
@@ -82,11 +63,14 @@ const Client: React.FC<Props> = (props) => {
                 {props.currentClient?.firstName} {props.currentClient?.lastName}
             </BootstrapDialogTitle>
             <DialogContent>
-                <Typography><b>Address: </b> {props.currentClient?.address}</Typography>
-                <Typography><b>Phone: </b>{props.currentClient?.phone}</Typography>
-                <Typography><b>Email: </b>{props.currentClient?.email}</Typography>
-                <Typography><b>Notes: </b>{props.currentClient?.notes}</Typography>
-                <Typography><b>Alternate Phone: </b>{props.currentClient?.altPhone}</Typography>
+                <Typography sx={props.currentClient?.moneyOwed ? {color: "red"} : null} variant="h6"><b>Money owed? {props.currentClient?.moneyOwed ? "YES" : "NO"}</b></Typography>
+                <Typography variant="h6"><b>Address: </b> {props.currentClient?.address}</Typography>
+                <Typography variant="h6"><b>Phone: </b>{props.currentClient?.phone}</Typography>
+                <Typography variant="h6"><b>Email: </b>{props.currentClient?.email}</Typography>
+                <Typography variant="h6"><b>Alternate Phone: </b>{props.currentClient?.altPhone}</Typography>
+                <Typography variant="body1" ><b>Notes: </b>{props.currentClient?.notes}</Typography>
+
+
             </DialogContent>
             <DialogActions>
                 <IconButton onClick={()=> { setIsEditing(true); }}>

@@ -9,14 +9,16 @@ export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   ' MuiDialog-container': {
     minHeight: '50vh',
     width: '65vw',
-    margin: 'auto'
-  },
+    margin: 'auto',
+    marginBottom: '25px',
+    },
   ' .MuiPaper-root': {
     // width: '50%',
     margin: 'auto',
   },
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),  
+
   },
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
@@ -33,7 +35,8 @@ export const BootstrapDialogTitle = (props: DialogTitleProps) => {
     const { children, onClose, ...other } = props;
     const theme: Theme = useTheme();
     return (
-        <DialogTitle sx={{backgroundColor: '#001e90', color: '#ffff', m: 0, p: 2 }} {...other}>
+        <DialogTitle sx={{backgroundColor: '#001e90', color: '#ffff', m: 0, p: 2, fontSize: '25px'
+      }} {...other}>
           {children}
           {onClose ? (
             <IconButton

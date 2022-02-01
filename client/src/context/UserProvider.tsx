@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { IClient } from '../../../interfaces/IClient';
+import { ObjectId } from 'bson';
 const userAxios = axios.create()
 
 
@@ -133,6 +134,21 @@ export const UserProvider: React.FC = ({ children }) => {
             })
     }
 
+        //GET Single Client by Params
+            //Not currently being used
+    //     function getSingleClient(){
+    //     console.log("getSingleClient was called")
+    //     console.log("clientId:", clientId)
+    //     userAxios.get(`/api/client/${clientId}`)
+    //         .then(res => {
+    //             console.log(res.data)
+    //             //@ts-ignore
+    //             setClient(...res.data)
+    //         })
+    //         .then(() => console.log(client))
+    //         .catch((err: any)=> console.log(err))
+    // }
+
     //GET USER INVOICES
     function getUserInvoices(){
         console.log("getUserInvoices was called")
@@ -165,7 +181,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
      //UPDATE client
      function updateClient(updatedClient: any){
-        console.log("delete client", updatedClient)
+        console.log("update client", updatedClient)
         userAxios.put(`/api/client/${updatedClient?._id}`, updatedClient)
             .then(res => {
                 getUserClients()

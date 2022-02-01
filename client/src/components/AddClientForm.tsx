@@ -1,4 +1,4 @@
-import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery } from '@mui/material';
+import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import React, { useState, useContext } from 'react';
 import { useUserContext } from '../context/UserProvider';
 import CloseIcon from '@mui/icons-material/Close';
@@ -40,7 +40,8 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
     const DialogStyle = {
         dialogTitle: {
             backgroundColor: theme.palette.primary.main,
-            color: '#ffff'
+            color: '#ffff',
+            marginBottom: '25px'
         },
         button: {
             gridColumn: 'span 2',
@@ -104,7 +105,6 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <p>Form in progress of being built</p>
             <DialogContent>
                 <Box
                     component="form"
@@ -156,14 +156,24 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
                             value={newClient.email}
                         />
                         <RedditTextField 
-                        onChange={handleChange}
-                        label="Notes"
-                        multiline
-                        rows={4}
-                        name="notes"
-                        value={newClient.notes}
-                        style={{ gridColumn: '1 / span 2'}}
+                            onChange={handleChange}
+                            label="Notes"
+                            multiline
+                            rows={4}
+                            name="notes"
+                            value={newClient.notes}
+                            style={{ gridColumn: '1 / span 2'}}
                         />
+                        <FormGroup>
+                            <FormControlLabel 
+                                control={<Checkbox 
+                                    defaultChecked={false}
+                                    //@ts-ignore
+                                    onChange={(e: any) => setNewClient((prevState: IClient) => ({...prevState, moneyOwed: e.target.checked}))} 
+                                    value={newClient?.moneyOwed} 
+                                />} 
+                                label="Is this client currently in an 'unpaid' status?" />
+                        </FormGroup>
                         <Button 
                             type="submit" 
                             variant="outlined" 

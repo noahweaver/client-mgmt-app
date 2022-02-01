@@ -66,17 +66,17 @@ const ClientDashboard: React.FC = () => {
     }
 
     //GET Single Client by Params
-    function getSingleClient(){
-        console.log("getSingleClient was called")
-        console.log("clientId:", currentClient?._id)
-        userAxios.get(`/api/client/${currentClient?._id}`)
-          .then(res => {
-              console.log(res.data)
-              setCurrentClient({...res.data})
-          })
-          .then(() => console.log(currentClient))
-          .catch((err: any)=> console.log(err))
-    }
+    // function getSingleClient(){
+    //     console.log("getSingleClient was called")
+    //     console.log("clientId:", currentClient?._id)
+    //     userAxios.get(`/api/client/${currentClient?._id}`)
+    //       .then(res => {
+    //           console.log(res.data)
+    //           setCurrentClient({...res.data})
+    //       })
+    //       .then(() => console.log(currentClient))
+    //       .catch((err: any)=> console.log(err))
+    // }
 
     function handleDelete() {
         console.log("handleDelete was called");
@@ -113,7 +113,7 @@ const ClientDashboard: React.FC = () => {
                     <Table>
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="left">Open</StyledTableCell>
+                            <StyledTableCell align="left">More Details</StyledTableCell>
                             <StyledTableCell align="left">Client</StyledTableCell>
                             <StyledTableCell align="left">Phone</StyledTableCell>
                             <StyledTableCell align="left">Address</StyledTableCell>
@@ -126,19 +126,21 @@ const ClientDashboard: React.FC = () => {
                     {/* add other filters, recent invoices added? */}
                     {/* search bar to search by name or address */}
                     {clients && clients.map((client: IClient) => 
-                    <StyledTableRow key={client._id}>
+                    //@ts-ignore
+                    <StyledTableRow key={client._id} >
                         <StyledTableCell>
                             <Button 
+                                sx={client.moneyOwed ? {color: "red"} : null}
                                 type="button" 
                                 onClick={() => {handleOpen(client); setOpenClient(true); }}>
                                 Open
                             </Button>
                         </StyledTableCell>
-                        <StyledTableCell>{client.firstName} {client.lastName}</StyledTableCell>
-                        <StyledTableCell>{client.phone}</StyledTableCell>
-                        <StyledTableCell>{client.address}</StyledTableCell>
-                        <StyledTableCell>{client.moneyOwed ? "Yes" : "No"}</StyledTableCell>
-                        <StyledTableCell onClick={() => { }}>{client.invoices?.length}</StyledTableCell>
+                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.firstName} {client.lastName}</StyledTableCell>
+                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.phone}</StyledTableCell>
+                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.address}</StyledTableCell>
+                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.moneyOwed ? "Yes" : "No"}</StyledTableCell>
+                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} onClick={() => { }}>{client.invoices?.length}</StyledTableCell>
                         
                     </StyledTableRow>
                     )}
@@ -160,4 +162,4 @@ const ClientDashboard: React.FC = () => {
     );
 }
 
-export default ClientDashboard
+export default ClientDashboard;
