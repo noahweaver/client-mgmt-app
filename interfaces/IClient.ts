@@ -9,7 +9,7 @@ export interface IClient {
     phone: string;
     altPhone?: string;
     email: string;
-    invoices?: Array<IInvoice> | null | undefined;
+    invoices?: [IInvoice];
     moneyOwed: boolean;
     user: {
         type: Schema.Types.ObjectId,

@@ -46,7 +46,7 @@ const Home: React.FC = () => {
 
     return (
         <Box sx={{ width: '85%', margin: 'auto' }}>
-            <Typography variant="h5" >Hello {username}!</Typography>
+            <Typography variant="h3" sx={{ paddingTop: '35px'}} >Hello {username}!</Typography>
             {/* user card with: 
             user info, 
             letter avatar,
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
             idk what else.  */}
             <Grid 
                 container 
-                sx={{ paddingTop: '50px', paddingBottom: '50px'}} 
+                sx={{ paddingTop: '15px', paddingBottom: '50px'}} 
                 spacing={{ xs: 1, sm: 2, md: 2, lg: 2 }}>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <Item sx={style.container} onClick={() => {

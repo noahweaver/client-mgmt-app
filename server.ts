@@ -34,6 +34,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/client-mgmt",
 app.use("/authentication", require("./routes/authRouter.ts"))
 app.use("/api", expressJwt({ secret: process.env.SECRET, algorithms: ['HS256'] })) //req.user
 app.use("/api/client", require("./routes/clientRouter"))
+app.use("/api/invoice", require("./routes/invoiceRouter"))
 
 
 //Error Handling

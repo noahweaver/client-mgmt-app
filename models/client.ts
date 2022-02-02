@@ -29,8 +29,7 @@ export const clientSchema = new Schema<IClient>({
         required: true
     },
     invoices: {
-        type: [invoiceSchema],
-        default: []
+        type: [invoiceSchema]
     },
     moneyOwed: {
         type: Boolean,
@@ -43,7 +42,8 @@ export const clientSchema = new Schema<IClient>({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
-    }
+    },
+   
 });
 
 module.exports = mongoose.model("Client", clientSchema);

@@ -1,9 +1,11 @@
+import { IInvoice } from "./IInvoice";
+
 //For task.ts Model
-export interface ITask extends Document {
+export interface ITask extends Document{
     title: string;
-    materials?: Array<string> | null | undefined;
-    materialsCost?: string;
-    price: number | string;
+    materials?: string;
+    materialsCost?: number;
+    price: number;
     notes?: string;
     completed: boolean;
 };
