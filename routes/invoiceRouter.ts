@@ -9,8 +9,8 @@ import { IClient } from "../interfaces/IClient";
 import { IInvoice } from '../interfaces/IInvoice';
 
 
-//GET all user invoices
-invoiceRouter.get("/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
+//GET all client invoices
+invoiceRouter.get("/client/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
     Invoice.find(
       { clientId: req.params.clientId },
       (err: any, invoices: any) => {
@@ -23,7 +23,18 @@ invoiceRouter.get("/:clientId", (req: IRequest, res: IResponse, next: NextFuncti
   });
 
 
-//GET all client invoices 
+//GET all user invoices 
+invoiceRouter.get("/user/:userId", (req: IRequest, res: IResponse, next: NextFunction) => {
+  Invoice.find(
+    { userId: req.params.userId },
+    (err: any, invoices: any) => {
+    if(err){
+      res.status(500)
+      return next(err)
+    }
+    return res.status(200).send(invoices)
+  })
+});
 
 // Add new invoice
 invoiceRouter.post('/:clientId', (req: IRequest, res: IResponse, next: NextFunction) => {

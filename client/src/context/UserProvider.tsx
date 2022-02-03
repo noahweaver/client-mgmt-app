@@ -27,6 +27,7 @@ export const UserProvider: React.FC = ({ children }) => {
         token: localStorage.getItem("token") || "",
         errMsg: "",
         clients: [],
+        invoices: [],
         tasks: []
     }
 
@@ -37,6 +38,7 @@ export const UserProvider: React.FC = ({ children }) => {
     useEffect(() => {
        getUserClients()
        getOpenTasks() 
+       getUserInvoices()
     }, []);
 
     //Signup
@@ -117,7 +119,8 @@ export const UserProvider: React.FC = ({ children }) => {
             token: "",
             errMsg: "",
             clients: [],
-            tasks: []
+            tasks: [],
+            invoices: []
         })
     }
 
@@ -126,7 +129,15 @@ export const UserProvider: React.FC = ({ children }) => {
         console.log("getUserClients was called")
         userAxios.get("/api/client/user")
             .then(res => {
-                const userClientList = res.data
+                const userClientList = res.data.sort(function(a: IClient, b: IClient){
+                    if (a.lastName < b.lastName){
+                        return -1;
+                    }
+                    if (a.lastName > b.lastName){
+                        return 1;
+                    }
+                    return 0;
+                })
                 setUserState(prevState => ({
                     ...prevState,
                     clients: userClientList
@@ -134,26 +145,20 @@ export const UserProvider: React.FC = ({ children }) => {
             })
     }
 
-        //GET Single Client by Params
-            //Not currently being used
-    //     function getSingleClient(){
-    //     console.log("getSingleClient was called")
-    //     console.log("clientId:", clientId)
-    //     userAxios.get(`/api/client/${clientId}`)
-    //         .then(res => {
-    //             console.log(res.data)
-    //             //@ts-ignore
-    //             setClient(...res.data)
-    //         })
-    //         .then(() => console.log(client))
-    //         .catch((err: any)=> console.log(err))
-    // }
-
     //GET USER INVOICES
     function getUserInvoices(){
         console.log("getUserInvoices was called")
-        //userAxios.get
+        userAxios.get(`/api/invoice/user/${userState.user._id}`)
+            .then(res => {
+                //@ts-ignore
+                setUserState(prevState => ({
+                    ...prevState,
+                    invoices: [res.data]
+                }))
+            })
+            .catch(err => console.log(err))
     }
+
 
     //ADD NEW CLIENT 
     function addNewClient(newClient: any){
@@ -216,4 +221,4 @@ export const UserProvider: React.FC = ({ children }) => {
     )
 }
 
-export const useUserContext = () => React.useContext(UserContext)
+export const useUserContext = () => React.useContext(UserContext);

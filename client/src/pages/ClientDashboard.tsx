@@ -90,6 +90,9 @@ const ClientDashboard: React.FC = () => {
         setCurrentClient(updatedClient);
     }
 
+    //GET Client INVOICES
+ 
+
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
     return (
@@ -118,13 +121,11 @@ const ClientDashboard: React.FC = () => {
                             <StyledTableCell align="left">Phone</StyledTableCell>
                             <StyledTableCell align="left">Address</StyledTableCell>
                             <StyledTableCell align="left">Money Owed</StyledTableCell>
-                            <StyledTableCell align="left">Invoices</StyledTableCell>
+                            {/* <StyledTableCell align="left">Invoices</StyledTableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {/* defaContainert alphabetical */}
-                    {/* add other filters, recent invoices added? */}
-                    {/* search bar to search by name or address */}
+                    {/* search bar to search by name or address? */}
                     {clients && clients.map((client: IClient) => 
                     //@ts-ignore
                     <StyledTableRow key={client._id} >
@@ -136,11 +137,11 @@ const ClientDashboard: React.FC = () => {
                                 Open
                             </Button>
                         </StyledTableCell>
-                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.firstName} {client.lastName}</StyledTableCell>
+                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.lastName}, {client.firstName} </StyledTableCell>
                         <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.phone}</StyledTableCell>
                         <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.address}</StyledTableCell>
                         <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.moneyOwed ? "Yes" : "No"}</StyledTableCell>
-                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} onClick={() => { }}>{client.invoices?.length}</StyledTableCell>
+                        {/* <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} onClick={() => { }}>{client.invoices?.length}</StyledTableCell> */}
                         
                     </StyledTableRow>
                     )}

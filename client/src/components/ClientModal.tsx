@@ -7,7 +7,11 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, 
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import LaunchIcon from '@mui/icons-material/Launch';
 import { BootstrapDialog, BootstrapDialogTitle } from './BootstrapDialog';
+import { IInvoice } from '../../../interfaces/IInvoice';
+import { useNavigate } from 'react-router-dom';
+
 
 const userAxios = axios.create();
 
@@ -27,20 +31,42 @@ interface Props {
     handleEdit: (updatedClient: IClient| undefined) => void
 }   
 
-const Client: React.FC<Props> = (props) => {
+const ClientModal: React.FC<Props> = (props) => {
 
     const [client, setClient] = useState<IClient | undefined>();
     const [isEditing, setIsEditing] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [clientInvoices, setClientInvoices] = useState<Array<IInvoice | undefined>>();
 
     const [editClient, setEditClient] = useState(false)
     const [editClientInput, setEditClientInput] = useState()
     const { clientId } = useParams();
+    const navigate = useNavigate();
+
 
     //useEffect
     useEffect(() => {
+        getClientInvoices();
         setClient(props.currentClient);
     }, []);
+
+    function getClientInvoices(){
+        console.log("getclientInvoices was called")
+        //@ts-ignore
+        userAxios.get(`/api/invoice/client/${props.currentClient?._id}`)
+            .then(res => {
+                setClientInvoices(res.data)
+            })
+            // .then(res => {
+            //     //@ts-ignore
+            //     setClient(prevState => ({
+            //         ...prevState,
+            //         invoices: [res.data]
+            //     }))
+            // })
+            .catch(err => console.log(err))
+    }
+    
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
@@ -69,7 +95,14 @@ const Client: React.FC<Props> = (props) => {
                 <Typography variant="h6"><b>Email: </b>{props.currentClient?.email}</Typography>
                 <Typography variant="h6"><b>Alternate Phone: </b>{props.currentClient?.altPhone}</Typography>
                 <Typography variant="body1" ><b>Notes: </b>{props.currentClient?.notes}</Typography>
-
+                <Typography variant="body1" ><b>Invoices: </b>{clientInvoices?.length}
+                <IconButton onClick={() => {
+                    //@ts-ignore
+                    navigate(`/clientdashboard/${client?._id}`)
+                 }}>
+                    <LaunchIcon />
+                </IconButton>
+                </Typography>
 
             </DialogContent>
             <DialogActions>
@@ -108,4 +141,4 @@ const Client: React.FC<Props> = (props) => {
     );
 };
 
-export default Client;
+export default ClientModal;
