@@ -1,15 +1,15 @@
-import { ObjectId, Schema } from 'mongoose'
+import { ObjectId, Schema, SchemaTimestampsConfig } from 'mongoose'
 import { IInvoice } from './IInvoice'
 
 //For client.ts model
-export interface IClient {
+export interface IClient extends Document, SchemaTimestampsConfig {
     firstName: string;
     lastName: string;
     address: string;
     phone: string;
     altPhone?: string;
     email: string;
-    invoices?: [IInvoice];
+    // invoices?: [IInvoice];
     moneyOwed: boolean;
     user: {
         type: Schema.Types.ObjectId,

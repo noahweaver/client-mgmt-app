@@ -153,7 +153,7 @@ export const UserProvider: React.FC = ({ children }) => {
                 //@ts-ignore
                 setUserState(prevState => ({
                     ...prevState,
-                    invoices: [res.data]
+                    invoices: res.data
                 }))
             })
             .catch(err => console.log(err))

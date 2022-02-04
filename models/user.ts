@@ -23,6 +23,11 @@ export const userSchema = new Schema<IUser>({
         type: String,
         required: true
     }
+},
+{
+    timestamps: {
+        currentTime: () => Math.floor(Date.now() / 1000)
+    }
 });
 
 //method that runs before the save

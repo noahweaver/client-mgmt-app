@@ -10,6 +10,8 @@ import InvoiceDashboard from './pages/InvoiceDashboard';
 import ClientModal from './components/ClientModal';
 import TaskDashboard from './pages/TaskDashboard';
 import Client from './pages/Client'
+import Invoice from './pages/Invoice';
+import Task from './pages/Task';
 
 type userStateType = {
   user: any,
@@ -37,17 +39,16 @@ const App: React.FC = () => {
         </Route>
         <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
           <Route path="/clientdashboard/*" element={<ClientDashboard />}/>
-          
+          <Route path="/clientdashboard/:clientId" element={<Client />}/>
         </Route>
-        <Route path="/clientdashboard/:clientId" element={<Client />}/>
-        {/* <Route element={<ProtectedRoute token={token} rest={undefined} />}>
-          <Route path="/:clientId" element={<Client  />}/>
-        </Route> */}
         <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
-          <Route path="/invoices" element={<InvoiceDashboard />}/>
+          <Route path="/invoices/*" element={<InvoiceDashboard />}/>
+          <Route path="/invoices/:invoiceId" element={<Invoice />}/>
         </Route>
         <Route  element={<ProtectedRoute token={token} rest={undefined} />}>
           <Route path="/tasks" element={<TaskDashboard />}/>
+          <Route path="/tasks/:taskId" element={<Task />}/>
+
         </Route>
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>

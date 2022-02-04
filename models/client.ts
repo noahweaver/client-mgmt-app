@@ -28,9 +28,9 @@ export const clientSchema = new Schema<IClient>({
         type: String,
         required: true
     },
-    invoices: {
-        type: [invoiceSchema]
-    },
+    // invoices: {
+    //     type: [invoiceSchema]
+    // },
     moneyOwed: {
         type: Boolean,
         default: false
@@ -44,6 +44,12 @@ export const clientSchema = new Schema<IClient>({
         required: true
     },
    
-});
+},
+{
+    timestamps: {
+        // currentTime: () => Math.floor(Date.now() / 1000)
+    }
+}
+);
 
 module.exports = mongoose.model("Client", clientSchema);

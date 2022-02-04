@@ -10,6 +10,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { IInvoice } from '../../../interfaces/IInvoice';
 import { useUserContext } from '../context/UserProvider'
+import { BootstrapDialog, BootstrapDialogTitle } from '../components/BootstrapDialog';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const userAxios = axios.create();
@@ -41,10 +44,7 @@ const Client: React.FC = () => {
     const [editClientInput, setEditClientInput] = useState();
     const { clientId } = useParams();
     const { user: { invoices }, deleteClient, updateClient } = useUserContext() as clientType;
-
-
-
-    //HISTORY?
+    const navigate = useNavigate();
 
     useEffect(() => {
         getSingleClient();
@@ -54,6 +54,7 @@ const Client: React.FC = () => {
 
     //get by params
     //maybe map through invoices in context?
+    //filter by most recent date
     function getClientInvoices(){
         console.log("getclientInvoices was called")
         //@ts-ignore
@@ -111,7 +112,7 @@ const Client: React.FC = () => {
                 <Typography variant="h6"><b>Address: </b> {client?.address}</Typography>
                 <Typography variant="h6"><b>Phone: </b>{client?.phone}</Typography>
                 <Typography variant="h6"><b>Email: </b>{client?.email}</Typography>
-                <Typography variant="h6"><b>Alternate Phone: </b>{client?.altPhone}</Typography>
+                <Typography variant="h6"><b>Alternate Phone: </b>{client?.altPhone ? client?.altPhone : "Not listed"}</Typography>
                 <Typography variant="body1" ><b>Notes: </b>{client?.notes}</Typography>
                 </CardContent>
                 <CardActions>
@@ -125,18 +126,19 @@ const Client: React.FC = () => {
                 </Card>                
                 <Typography variant="body1" ><b>Invoices: </b>{clientInvoices?.length}</Typography>
                 <ul>
-                    Will eventually make these clickable to new route of clientId/InvoiceId
-                    <br></br>
-                    <br></br>
-                    NO MORE WORK UNTIL INVOICE NAME IS ADDED TO TYPE, INTERFACE, AND FIXED THROUGHOUT
-                    <br></br>
-                    <br></br>
                     {clientInvoices && clientInvoices.map(invoice => 
                         <li>
-                            <div>
-                                {/* Invoice name will go here when added on backend */}
-                                {invoice?.title ? invoice?.title : "NO TITLE"}
-                                <br></br>
+                            <div style={ invoice?.hasPaid ? { color: "#000000" } : { color: "#ff0006" }}>
+                            
+                                <IconButton onClick={() => {
+                                    //@ts-ignore
+                                    navigate(`/invoices/${invoice?._id}`)
+                                }}>
+                                    <LaunchIcon />
+                                </IconButton>
+                                <Typography variant="body1">{invoice?.invoiceName ? invoice?.invoiceName : "NO TITLE"}</Typography>
+                                
+                                {/* <br></br>
                                 {invoice?.hasPaid ? "PAID" : "NOT PAID"}
                                 <ul>
                                 {invoice?.tasks.map(task => 
@@ -145,7 +147,7 @@ const Client: React.FC = () => {
                                 </li>
                                     )}
                                 </ul>
-                                Notes: {invoice?.notes}
+                                Notes: {invoice?.notes} */}
                             </div>
                         </li>
                         )}
@@ -154,11 +156,21 @@ const Client: React.FC = () => {
             </>
             :
             <>
-            <EditClientForm 
+            <BootstrapDialog
+                open={isEditing}
+                onClose={() => { }}
+                aria-labelledby="customized-dialog-title"
+                fullScreen={fullScreen}
+            >
+            <DialogContent>
+                <EditClientForm 
                 client={client}
                 toggleEdit={(prev: any) => setIsEditing((prev: any) => !prev)}
                 handleEdit={handleEdit}
             />
+            </DialogContent>
+            </BootstrapDialog>
+            
             </>
             }
 

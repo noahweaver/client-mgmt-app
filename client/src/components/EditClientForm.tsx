@@ -29,6 +29,10 @@ export const EditClientForm: React.FC<Props> = (props) => {
                 backgroundColor: theme.palette.primary.main,
                 color: '#ffff'
             }
+        },
+        icon: {
+            float: "right",
+            color: theme.palette.primary.light
         }
     }
 
@@ -58,6 +62,9 @@ export const EditClientForm: React.FC<Props> = (props) => {
         <>
         <DialogTitle sx={ DialogStyle.dialogTitle }>
             Editing <b>{props.client?.firstName} {props.client?.lastName}</b>
+            <IconButton sx={ DialogStyle.icon } onClick={() => props.toggleEdit((prev) => !prev)}>
+                <CancelIcon />
+            </IconButton>
         </DialogTitle>
         <DialogContent>
         <Box
@@ -138,12 +145,12 @@ export const EditClientForm: React.FC<Props> = (props) => {
         </Box>
         </DialogContent>
         <DialogActions>
-            <IconButton onClick={() => props.toggleEdit((prev) => !prev)}>
+            {/* <IconButton onClick={() => props.toggleEdit((prev) => !prev)}>
                 <CancelIcon />
-            </IconButton>
-            <IconButton disabled={!isChanged} onClick={() => { }}>
+            </IconButton> */}
+            {/* <IconButton disabled={!isChanged} onClick={() => { }}>
                 <SaveIcon />
-            </IconButton>
+            </IconButton> */}
         </DialogActions>
         </>
     );

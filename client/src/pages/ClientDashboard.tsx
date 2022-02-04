@@ -140,9 +140,7 @@ const ClientDashboard: React.FC = () => {
                         <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.lastName}, {client.firstName} </StyledTableCell>
                         <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.phone}</StyledTableCell>
                         <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.address}</StyledTableCell>
-                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.moneyOwed ? "Yes" : "No"}</StyledTableCell>
-                        {/* <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} onClick={() => { }}>{client.invoices?.length}</StyledTableCell> */}
-                        
+                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.moneyOwed ? "Yes" : "No"}</StyledTableCell>                        
                     </StyledTableRow>
                     )}
                     </TableBody>

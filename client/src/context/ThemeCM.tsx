@@ -40,7 +40,7 @@ const themeCM = {
       main: '#2196f3',
       light: '#4dabf5',
       dark: '#1769aa',
-      contrastText: '#ffffff',
+      contrastText: '#ffffff'
     },
     // need to add link colors, highlight colors, colors for different buttons and background colors etc
   },

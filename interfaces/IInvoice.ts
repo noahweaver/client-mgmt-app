@@ -1,19 +1,17 @@
 import { ObjectID, ObjectId } from "bson";
-import { Schema } from "mongoose";
+import { Schema, SchemaTimestampsConfig } from "mongoose";
 import { IClient } from "./IClient";
 import { ITask } from "./ITask";
 
 
 
 //For invoice.ts model
-export interface IInvoice extends Document{
+export interface IInvoice extends Document, SchemaTimestampsConfig{
+    invoiceName: string,
+    datePaid?:Date,
     tasks: Array<ITask>,
     hasPaid: boolean,
     notes?: string,
-    // client: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Client"
-    // },
     userId: {
         type: Schema.Types.ObjectId,
         ref: "User"
@@ -21,8 +19,8 @@ export interface IInvoice extends Document{
     clientId: {
         type: Schema.Types.ObjectId,
         ref: "Client",
+    },
+    created_at: {
+        type: Date
     }
-    // _id: {
-    //     type: Schema.Types.ObjectId
-    // }
 };
