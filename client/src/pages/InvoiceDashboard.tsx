@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Button, Container, IconButton, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Container, IconButton, Table, TableBody, TableHead, TableRow } from '@mui/material';
 import { IInvoice } from '../../../interfaces/IInvoice';
 import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
 import { useUserContext } from '../context/UserProvider';
@@ -28,7 +28,6 @@ const InvoiceDashboard: React.FC = () => {
         <div>
             <h1>Invoices List</h1>
             <p>Invoices should be listed from most recent. All will be linked to individual invoice. Will have the ability to search/filter by date or client name</p>
-            
             <Container maxWidth="md" sx={{ padding: 0, width: '100vw'}} >
                     <Table>
                     <TableHead>
@@ -38,7 +37,6 @@ const InvoiceDashboard: React.FC = () => {
                             <StyledTableCell align="left">Invoice Name</StyledTableCell>
                             <StyledTableCell align="left">Invoice Number</StyledTableCell>
                             <StyledTableCell align="left">Paid?</StyledTableCell>
-                            {/* <StyledTableCell align="left">Invoices</StyledTableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -64,8 +62,6 @@ const InvoiceDashboard: React.FC = () => {
                     </TableBody>
                     </Table>
                 </Container>
-            {/* Each Invoice will link to a page with the invoice info via Invoice.tsx */}
-            {/* MUI has list components */}
             {/* pagination MUI component to go through invoices */}
         </div>
     )

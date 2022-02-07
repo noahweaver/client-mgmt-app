@@ -1,13 +1,10 @@
 export {};
+import { NextFunction } from "express";
+import { IRequest, IResponse } from "../interfaces/expressInterfaces";
+
 const express = require("express");
 const invoiceRouter = express.Router();
 const Invoice = require('../models/invoice.ts');
-import { ObjectId } from "bson";
-import { NextFunction } from "express";
-import { IRequest, IResponse } from "../interfaces/expressInterfaces";
-import { IClient } from "../interfaces/IClient";
-import { IInvoice } from '../interfaces/IInvoice';
-
 
 //GET all client invoices
 invoiceRouter.get("/client/:clientId", (req: IRequest, res: IResponse, next: NextFunction) => {
@@ -21,7 +18,6 @@ invoiceRouter.get("/client/:clientId", (req: IRequest, res: IResponse, next: Nex
       return res.status(200).send(invoices)
     })
   });
-
 
 //GET all user invoices 
 invoiceRouter.get("/user/:userId", (req: IRequest, res: IResponse, next: NextFunction) => {
@@ -71,9 +67,5 @@ invoiceRouter.get("/:invoiceId", (req: IRequest, res: IResponse, next: NextFunct
 //Update invoice (only by user)
 
 //Delete invoice
-
-
-
-
 
 module.exports = invoiceRouter;

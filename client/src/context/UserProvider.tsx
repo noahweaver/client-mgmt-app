@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { IClient } from '../../../interfaces/IClient';
-import { ObjectId } from 'bson';
+
 const userAxios = axios.create()
 
 
@@ -17,11 +17,8 @@ userAxios.interceptors.request.use(config => {
 });
 
 export const UserProvider: React.FC = ({ children }) => {
-
-    // add user invoices to state
     
     const initState = {
-        // user: JSON.parse(localStorage.getItem("user") || "") || {},
         //@ts-ignore
         user: JSON.parse(localStorage.getItem("user")) || {},
         token: localStorage.getItem("token") || "",
@@ -39,6 +36,7 @@ export const UserProvider: React.FC = ({ children }) => {
        getUserClients()
        getOpenTasks() 
        getUserInvoices()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     //Signup
@@ -53,15 +51,12 @@ export const UserProvider: React.FC = ({ children }) => {
                     user,
                     token
                 }))
-                // localStorage.setItem("userState", userState)
             })
             .catch(err => {
                 setAuthErr(true)
                 handleAuthErr(err.response.data.errMsg)
                 console.dir(err)
             })
-            // .catch(err => handleAuthErr(err.response.data.errMsg))
-            // .catch(err => console.dir(err))
     }
     
     //Login
@@ -74,7 +69,6 @@ export const UserProvider: React.FC = ({ children }) => {
                 localStorage.setItem("user", JSON.stringify(user))
                 getUserInvoices()
                 getUserClients()
-                // add to state update
                 setUserState(prevUserState => ({
                     ...prevUserState,
                     user,
@@ -86,7 +80,6 @@ export const UserProvider: React.FC = ({ children }) => {
                 setAuthErr(true)
                 handleAuthErr(err.response.data.errMsg)
             })
-            // .catch(err => handleAuthErr(err.response.data.errMsg))
     };
 
     //Auth Errors
@@ -219,6 +212,6 @@ export const UserProvider: React.FC = ({ children }) => {
             {children}
         </UserContext.Provider>
     )
-}
+};
 
 export const useUserContext = () => React.useContext(UserContext);
