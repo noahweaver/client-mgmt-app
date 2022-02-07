@@ -41,22 +41,22 @@ const InvoiceDashboard: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         {invoiceList && invoiceList.map((invoice: IInvoice) => 
-                        ///@ts-ignore
+                        //@ts-ignore
                         <StyledTableRow key={invoice._id} >
-                        <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >
-                            <IconButton onClick={() => {
-                                    //@ts-ignore
-                                    navigate(`/invoices/${invoice?._id}`)
-                                }}>
-                                <LaunchIcon />
-                            </IconButton>
-                        </StyledTableCell>
-                        {/* @ts-ignore */}
-                        <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >{invoice.created_at.toString()}</StyledTableCell>
-                        <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >{invoice.invoiceName}</StyledTableCell>
-                        {/* @ts-ignore */}
-                        <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >{invoice._id}</StyledTableCell>
-                        <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >{invoice.hasPaid ? "YES" : "NO"}</StyledTableCell>
+                            <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >
+                                <IconButton onClick={() => {
+                                        //@ts-ignore
+                                        navigate(`/invoices/${invoice?._id}`)
+                                    }}>
+                                    <LaunchIcon />
+                                </IconButton>
+                            </StyledTableCell>
+                            {/* @ts-ignore */}
+                            <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >{invoice.created_at.toString()}</StyledTableCell>
+                            <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >{invoice.invoiceName}</StyledTableCell>
+                            {/* @ts-ignore */}
+                            <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >{invoice._id}</StyledTableCell>
+                            <StyledTableCell sx={invoice.hasPaid ? {color: "red"} : null} >{invoice.hasPaid ? "YES" : "NO"}</StyledTableCell>
                     </StyledTableRow>
                     )}
                     </TableBody>

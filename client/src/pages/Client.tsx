@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import { IClient } from '../../../interfaces/IClient';
 import EditClientForm from '../components/EditClientForm';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Modal, styled, Theme, Typography, useTheme, useMediaQuery, CardContent, Card, CardActions, CardHeader } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Modal, styled, Theme, Typography, useTheme, useMediaQuery, CardContent, Card, CardActions, CardHeader, Container, Table, TableBody, TableHead, TableRow } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -12,6 +12,7 @@ import { IInvoice } from '../../../interfaces/IInvoice';
 import { useUserContext } from '../context/UserProvider'
 import { BootstrapDialog, BootstrapDialogTitle } from '../components/BootstrapDialog';
 import { useNavigate } from 'react-router-dom';
+import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
 
 
 
@@ -125,33 +126,40 @@ const Client: React.FC = () => {
                 </CardActions>                
                 </Card>                
                 <Typography variant="body1" ><b>Invoices: </b>{clientInvoices?.length}</Typography>
-                <ul>
+                <Container maxWidth="md" sx={{ padding: 0, width: '100vw'}} >
+                    <Table>
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell align="left">Open</StyledTableCell>
+                            <StyledTableCell align="left">Date Created</StyledTableCell>
+                            <StyledTableCell align="left">Invoice Name</StyledTableCell>
+                            <StyledTableCell align="left">Invoice Number</StyledTableCell>
+                            <StyledTableCell align="left">Paid?</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
                     {clientInvoices && clientInvoices.map(invoice => 
-                        <li>
-                            <div style={ invoice?.hasPaid ? { color: "#000000" } : { color: "#ff0006" }}>
-                            
-                                <IconButton onClick={() => {
+                    //@ts-ignore
+                    <StyledTableRow key={invoice._id} >
+                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >
+                            <IconButton onClick={() => {
                                     //@ts-ignore
                                     navigate(`/invoices/${invoice?._id}`)
                                 }}>
-                                    <LaunchIcon />
-                                </IconButton>
-                                <Typography variant="body1">{invoice?.invoiceName ? invoice?.invoiceName : "NO TITLE"}</Typography>
-                                
-                                {/* <br></br>
-                                {invoice?.hasPaid ? "PAID" : "NOT PAID"}
-                                <ul>
-                                {invoice?.tasks.map(task => 
-                                <li>
-                                    {task.title}
-                                </li>
-                                    )}
-                                </ul>
-                                Notes: {invoice?.notes} */}
-                            </div>
-                        </li>
-                        )}
-                </ul>
+                                <LaunchIcon />
+                            </IconButton>
+                        </StyledTableCell>
+                        {/* @ts-ignore */}
+                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >{invoice?.created_at.toString()}</StyledTableCell>
+                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >{invoice?.invoiceName}</StyledTableCell>
+                        {/* @ts-ignore */}
+                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >{invoice?._id}</StyledTableCell>
+                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >{invoice?.hasPaid ? "YES" : "NO"}</StyledTableCell>
+                    </StyledTableRow>
+                    )}
+                </TableBody>
+                    </Table>
+                </Container>
 
             </>
             :
