@@ -8,7 +8,7 @@ import { UserProvider } from './context/UserProvider';
 import { ThemeProvider } from '@mui/material/styles';
 import themeCM from './context/ThemeCM'
 import './styles/styles.css'
-import InvoiceProvider from './context/InvoiceProvider';
+import { InvoiceProvider } from './context/InvoiceProvider';
 
 
 

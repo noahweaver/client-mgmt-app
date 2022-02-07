@@ -65,6 +65,21 @@ invoiceRouter.get("/:invoiceId", (req: IRequest, res: IResponse, next: NextFunct
 })
 
 //Update invoice (only by user)
+invoiceRouter.put('/:invoiceId', (req: IRequest, res: IResponse, next: NextFunction) => {
+  Invoice.findByIdAndUpdate(
+    { _id: req.params.invoiceId, user: req.user._id },
+    req.body,
+    { new: true },
+    (err: any, updatedInvoice: any) => {
+      if(err) {
+        console.log("Error")
+        res.status(500)
+        return next(err)
+      }
+      return res.send(updatedInvoice)
+    }
+  )
+})
 
 //Delete invoice
 

@@ -64,7 +64,7 @@ const Home: React.FC = () => {
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <Item sx={style.container} onClick={() => {
                     navigate('/invoices')
-                    }}> Invoices </Item>
+                    }}> Invoices</Item>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <Item sx={style.container} onClick={() => {
