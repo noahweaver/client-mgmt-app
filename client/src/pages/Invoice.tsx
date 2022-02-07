@@ -116,8 +116,9 @@ const Invoice: React.FC = () => {
         border: "2px solid #000", 
         borderRadius: 2,
         margin: "2% 4%",
-        height: "1000px",
+        height: "1100px",
         boxShadow:" 10px 5px 5px #767676",
+        backgroundColor: "#ffff",
         header: {
            backgroundColor: theme.palette.primary.light,
             color: "#000",
@@ -164,15 +165,21 @@ const Invoice: React.FC = () => {
         },
         payment: {
 
+        },
+        notes: {
+            margin: 10,
+            border: "2px solid #000", 
+            borderRadius: 2,
+            height: "100px"
         }
     }
 
     return (
-    <>
+    <div style={{ backgroundColor: "#dddddd55", height: "95vh"}}>
+        {invoice && 
         <Container component="div">
             {/* @ts-ignore */}
             <Typography variant="h5"> <b>Invoice #:</b> {invoice?._id} </Typography>
-            {invoice && 
             <FormGroup>
                 <FormControlLabel 
                     control={<Checkbox 
@@ -182,7 +189,7 @@ const Invoice: React.FC = () => {
                         onChange={handleChecked}
                     /> } 
                     label="Has this invoice been paid?" />
-            </FormGroup>}
+            </FormGroup>
             when invoice is checked as paid, needs to save paid date
             <Box maxWidth="md" sx={ InvoiceStyle }>
             {/* add company info as optional for user model? */}
@@ -201,7 +208,7 @@ const Invoice: React.FC = () => {
                 <Box sx={InvoiceStyle.invoiceInfo}>
                     {/* @ts-ignore */}
                     <Typography variant="body1"><b>Invoice #: </b>{invoice._id}</Typography>
-                    <Typography variant="body2"> {invoice?.hasPaid ? "This invoice has been paid" : "This invoice has NOT been paid"}</Typography>
+                    <Typography variant="body2"> <b> {invoice?.hasPaid ? "This invoice has been paid" : "This invoice has NOT been paid"} </b> </Typography>
                 </Box>
             {/* table outlining tasks, descriptions, costs, mamterials etc */}
             <Table sx={InvoiceStyle.tasks}>
@@ -230,6 +237,9 @@ const Invoice: React.FC = () => {
             <Box sx={InvoiceStyle.total}>
                 <Typography sx={{paddingRight: "25px", textAlign: "end"}}><b>Total:</b> $ {invoiceTotal}</Typography>
             </Box>
+            <Box>
+                <Typography variant="body2" sx={ InvoiceStyle.notes }><b> Notes: </b> {invoice.notes}</Typography> 
+            </Box>
             {/* Insert Payment Options Here
             <br/>
             Any other info here
@@ -237,7 +247,7 @@ const Invoice: React.FC = () => {
             End of Invoice */}
             
             </Box>
-        </Container>
+        </Container>}
             {/* edit button/form
             <br/>
             delete button */}
@@ -245,7 +255,7 @@ const Invoice: React.FC = () => {
             
             {/* <button>Create PDF</button> */}
 
-    </>
+    </div>
     )
 }
 
