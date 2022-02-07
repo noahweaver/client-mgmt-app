@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useContext} from 'react';
-import axios, { AxiosResponse } from 'axios';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { IClient } from '../../../interfaces/IClient';
 import EditClientForm from './EditClientForm';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Modal, styled, Theme, Typography, useTheme, useMediaQuery } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Button, DialogActions, DialogContent, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -87,6 +86,13 @@ const ClientModal: React.FC<Props> = (props) => {
                 id="customized-dialog-title" 
                 onClose={props.onClose}>
                 {props.currentClient?.firstName} {props.currentClient?.lastName}
+                <IconButton sx={{ color: theme.palette.grey[300] }} 
+                    onClick={() => {
+                    //@ts-ignore
+                    navigate(`/clientdashboard/${client?._id}`)
+                 }}>
+                    <LaunchIcon />
+                </IconButton>
             </BootstrapDialogTitle>
             <DialogContent>
                 <Typography sx={props.currentClient?.moneyOwed ? {color: "red"} : null} variant="h6"><b>Money owed? {props.currentClient?.moneyOwed ? "YES" : "NO"}</b></Typography>
@@ -96,14 +102,7 @@ const ClientModal: React.FC<Props> = (props) => {
                 <Typography variant="h6"><b>Alternate Phone: </b>{props.currentClient?.altPhone}</Typography>
                 <Typography variant="body1" ><b>Notes: </b>{props.currentClient?.notes}</Typography>
                 <Typography variant="body1" ><b>Invoices: </b>{clientInvoices?.length}
-                <IconButton onClick={() => {
-                    //@ts-ignore
-                    navigate(`/clientdashboard/${client?._id}`)
-                 }}>
-                    <LaunchIcon />
-                </IconButton>
                 </Typography>
-
             </DialogContent>
             <DialogActions>
                 <IconButton onClick={()=> { setIsEditing(true); }}>
