@@ -60,7 +60,10 @@ const Nav: React.FC<NavProps> = (props) => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            onClick={() => {
+              navigate('/home')
+              }}
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, cursor: "pointer" }}
           >
             CM
           </Typography>
@@ -108,7 +111,10 @@ const Nav: React.FC<NavProps> = (props) => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            onClick={() => {
+              navigate('/home')
+              }}
+            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, cursor: "pointer" }}
           >LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
