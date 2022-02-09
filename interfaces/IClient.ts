@@ -16,3 +16,16 @@ export interface IClient extends Document, SchemaTimestampsConfig {
     };
     notes?: string;
 };
+
+
+export interface IAddClientForm {
+    firstName: string;
+    lastName: string;
+    address: string;
+    phone: string;
+    altPhone?: string;
+    email: string;
+    moneyOwed: boolean;
+    userId: string;
+    notes: string;
+}

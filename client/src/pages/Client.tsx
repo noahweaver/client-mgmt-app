@@ -13,6 +13,7 @@ import { useUserContext } from '../context/UserProvider'
 import { BootstrapDialog, BootstrapDialogTitle } from '../components/BootstrapDialog';
 import { useNavigate } from 'react-router-dom';
 import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
+import AddInvoiceForm from '../components/AddInvoiceForm';
 
 
 
@@ -40,18 +41,29 @@ const Client: React.FC = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [clientInvoices, setClientInvoices] = useState<Array<IInvoice | undefined>>();
-
+    const [addingInvoiceToggle, setAddingInvoiceToggle] = useState(false);
     const [editClient, setEditClient] = useState(false);
     const [editClientInput, setEditClientInput] = useState();
-    const { clientId } = useParams();
     const { user: { invoices }, deleteClient, updateClient } = useUserContext() as clientType;
     const navigate = useNavigate();
+    const theme: Theme = useTheme();
+    const { clientId } = useParams();
+
 
     useEffect(() => {
         getSingleClient();
         getClientInvoices();
     }, []);
 
+    const buttonStyle = {
+        button: {
+            margin: '25px 0 10px 25px',
+            '&:hover': {
+                backgroundColor: theme.palette.primary.main,
+                color: '#ffff',
+            }
+        }
+    }
 
     //get by params
     //maybe map through invoices in context?
@@ -96,8 +108,6 @@ const Client: React.FC = () => {
         //can I send directly to context?
     }
 
-
-    const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     
     return (
@@ -126,6 +136,19 @@ const Client: React.FC = () => {
                 </CardActions>                
                 </Card>                
                 <Typography variant="body1" ><b>Invoices: </b>{clientInvoices?.length}</Typography>
+                <Button 
+                    variant="outlined" 
+                    onClick={() => setAddingInvoiceToggle(prev => !prev)} 
+                    sx={buttonStyle.button}>
+                    Add New Invoice
+                </Button>
+                {addingInvoiceToggle &&
+                <AddInvoiceForm 
+                    setAddingInvoiceToggle={setAddingInvoiceToggle}
+                    addingInvoice={addingInvoiceToggle}
+                    clientId={clientId}
+                />
+                }
                 <Container maxWidth="md" sx={{ padding: 0, width: '100vw'}} >
                     <Table>
                     <TableHead>
@@ -150,11 +173,11 @@ const Client: React.FC = () => {
                             </IconButton>
                         </StyledTableCell>
                         {/* @ts-ignore */}
-                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >{invoice?.created_at.toString()}</StyledTableCell>
-                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >{invoice?.invoiceName}</StyledTableCell>
+                        <StyledTableCell sx={!invoice.hasPaid ? {color: "red"} : null} >{typeof invoice?.createdAt === "string" ? invoice.createdAt.split('T')[0] : "No date"}</StyledTableCell>
+                        <StyledTableCell sx={!invoice?.hasPaid ? {color: "red"} : null} >{invoice?.invoiceName}</StyledTableCell>
                         {/* @ts-ignore */}
-                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >{invoice?._id}</StyledTableCell>
-                        <StyledTableCell sx={invoice?.hasPaid ? {color: "red"} : null} >{invoice?.hasPaid ? "YES" : "NO"}</StyledTableCell>
+                        <StyledTableCell sx={!invoice?.hasPaid ? {color: "red"} : null} >{invoice?._id}</StyledTableCell>
+                        <StyledTableCell sx={!invoice?.hasPaid ? {color: "red"} : null} >{invoice?.hasPaid ? "YES" : "NO"}</StyledTableCell>
                     </StyledTableRow>
                     )}
                 </TableBody>

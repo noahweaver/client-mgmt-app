@@ -1,28 +1,36 @@
-import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import React, { useState, useContext } from 'react';
+import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { useUserContext } from '../context/UserProvider';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme, Theme } from '@mui/material/styles';
-import { IClient, IAddClientForm } from '../../../interfaces/IClient';
+import { IInvoice, IAddInvoiceForm } from '../../../interfaces/IInvoice';
 import { userInfo } from 'os';
 import { RedditTextField } from './RedditTextField'; 
+import { InvoiceContext } from '../context/InvoiceProvider';
 
 
-  interface IClientFormProps {
-    setAddingClientToggle: (value: React.SetStateAction<boolean>) => void ,
-    addingClient: boolean,
+  interface IInvoiceFormProps {
+    setAddingInvoiceToggle: (value: React.SetStateAction<boolean>) => void ,
+    addingInvoice: boolean,
+    clientId?: string
+}
+
+type invoiceFormType ={
+    addInvoice: (invoice: any, clientId: string | undefined) => void
 }
 
 type clientFormType ={
-    addNewClient: (newClient: any) => void
     user: {
         _id: string
     }
 }
 
-const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addingClient }) => {
 
-    const { addNewClient, user: { _id } } = useUserContext() as clientFormType;
+
+const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, addingInvoice, clientId }) => {
+
+    const { addInvoice } = useContext(InvoiceContext) as invoiceFormType;
+    const { user: { _id } } = useUserContext() as clientFormType;
     const theme: Theme = useTheme();
 
     const DialogStyle = {
@@ -43,39 +51,34 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
     }
 
     const initInputs = {
-        firstName: "",
-        lastName: "",
-        address: "",
-        phone: "",
-        altPhone: "",
-        email: "",
+        invoiceName: "",
+        tasks: [],
+        hasPaid: false,
         notes: "",
         userId: _id,
-        moneyOwed: false,
         }
 
-    const [newClient, setNewClient] = useState<IAddClientForm>(initInputs);
+    const [newInvoice, setNewInvoice] = useState<IAddInvoiceForm>(initInputs);
 
     function handleChange(e: any){
         const {name, value} = e.target;
-        setNewClient(prevInputs => ({
+        setNewInvoice(prevInputs => ({
             ...prevInputs,
             [name]: value
         }))
     }
 
-    function handleClientAdd(e: any){
+    function handleInvoiceAdd(e: any){
         e.preventDefault();
-        setAddingClientToggle(false);
-        addNewClient(newClient);
+        setAddingInvoiceToggle(false);
+        addInvoice(newInvoice, clientId);
     }
-    
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
 
     return (
         <Dialog
-            open={addingClient}
+            open={addingInvoice}
             fullScreen={fullScreen}
         >
             <DialogTitle
@@ -83,7 +86,7 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
             >Adding New Client
                 <IconButton
                 aria-label="close"
-                onClick={() => setAddingClientToggle(false)}
+                onClick={() => setAddingInvoiceToggle(false)}
                 sx={{
                     position: 'absolute',
                     right: 8,
@@ -107,50 +110,25 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
                         <RedditTextField 
                             required
                             onChange={handleChange}
-                            label="First name"
+                            label="Invoice Name"
                             id="reddit-input"
-                            name="firstName"
-                            value={newClient.firstName}/>
-                        <RedditTextField 
+                            name="invoiceName"
+                            value={newInvoice.invoiceName}/>
+                            ARRAY OF TASKS TO BE ADDED, CLICK TO ADD NEW FIELDS FOR TASK NAME, MATERIALS, MATERIALS COST, PRICE FOR TASK
+                        {/* <RedditTextField 
                         id="reddit-input"   
                             required
                             onChange={handleChange}
                             label="Last name"
                             name="lastName"
-                            value={newClient.lastName}/>
-                        <RedditTextField 
-                            required
-                            onChange={handleChange}
-                            label="Address"
-                            name="address"
-                            value={newClient.address}/>
-                        <RedditTextField 
-                            required
-                            onChange={handleChange}
-                            label="Phone Number"
-                            name="phone"
-                            value={newClient.phone}
-                        />
-                        <RedditTextField 
-                            onChange={handleChange}
-                            label="Alternate Phone Number"
-                            name="altPhone"
-                            value={newClient.altPhone}
-                        />
-                        <RedditTextField 
-                            required
-                            onChange={handleChange}
-                            label="Email"
-                            name="email"
-                            value={newClient.email}
-                        />
+                            value={newInvoice.lastName}/> */}
                         <RedditTextField 
                             onChange={handleChange}
                             label="Notes"
                             multiline
                             rows={4}
                             name="notes"
-                            value={newClient.notes}
+                            value={newInvoice.notes}
                             style={{ gridColumn: '1 / span 2'}}
                         />
                         <FormGroup>
@@ -158,15 +136,15 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
                                 control={<Checkbox 
                                     defaultChecked={false}
                                     //@ts-ignore
-                                    onChange={(e: any) => setNewClient((prevState: IClient) => ({...prevState, moneyOwed: e.target.checked}))} 
-                                    value={newClient?.moneyOwed} 
+                                    onChange={(e: any) => setNewInvoice((prevState: IInvoice) => ({...prevState, hasPaid: e.target.checked}))} 
+                                    value={newInvoice?.hasPaid} 
                                 />} 
                                 label="Is this client currently in an 'unpaid' status?" />
                         </FormGroup>
                         <Button 
                             type="submit" 
                             variant="outlined" 
-                            onClick={handleClientAdd}
+                            onClick={handleInvoiceAdd}
                             sx={DialogStyle.button}
                             >
                             Submit
@@ -176,4 +154,4 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
         </Dialog>
     );
 }
-export default AddClientForm;
+export default AddInvoiceForm;

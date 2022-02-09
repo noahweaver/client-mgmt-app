@@ -99,13 +99,12 @@ const ClientDashboard: React.FC = () => {
         <div>
             <Typography variant='h2' sx={{ m: '25px 0 0 25px'}}>ROLODEX</Typography>
             <div>
-                {!addingClientToggle && 
                 <Button 
                     variant="outlined" 
                     onClick={() => setAddingClientToggle(prev => !prev)} 
                     sx={buttonStyle.button}>
                     Add New Client
-                </Button>}
+                </Button>
                 {addingClientToggle && 
                 <AddClientForm 
                 //@ts-ignore

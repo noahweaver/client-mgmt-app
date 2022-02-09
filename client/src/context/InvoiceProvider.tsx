@@ -18,8 +18,8 @@ userAxios.interceptors.request.use(config => {
 
 export const InvoiceProvider: React.FC = ({ children }) => {
 
-    function addInvoice() {
-        console.log("context addInvoice");
+    function addInvoice(invoice: IInvoice, clientId: string | undefined) {
+        console.log("context addInvoice", invoice, clientId);
     }
 
     function editInvoice(updatedInvoice: IInvoice) {

@@ -21,3 +21,12 @@ export interface IInvoice extends Document, SchemaTimestampsConfig{
         ref: "Client",
     },
 };
+
+export interface IAddInvoiceForm {
+    invoiceName: string,
+    datePaid?: Date,
+    tasks: Array<ITask>,
+    hasPaid: boolean,
+    notes?: string,
+    userId: string,
+}
