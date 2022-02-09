@@ -20,7 +20,4 @@ export interface IInvoice extends Document, SchemaTimestampsConfig{
         type: Schema.Types.ObjectId,
         ref: "Client",
     },
-    created_at: {
-        type: Date
-    }
 };

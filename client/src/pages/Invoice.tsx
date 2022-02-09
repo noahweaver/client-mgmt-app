@@ -197,6 +197,7 @@ const Invoice: React.FC = () => {
                     <Box sx={InvoiceStyle.header.userInfo}>
                         <Typography><b>Name:</b> {user.username}</Typography>
                         <Typography><b>Employee ID:</b> {user._id}</Typography>
+                        <Typography><b>Date: </b> {typeof invoice?.createdAt === "string" ? invoice.createdAt.split('T')[0] : "No date"}</Typography>
                     </Box>
                     <Box sx={InvoiceStyle.header.clientInfo}>
                         <Typography variant="h6"><b>Bill to:</b> {client?.lastName}, {client?.firstName}</Typography>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, IconButton, Table, TableBody, TableHead, TableRow } from '@mui/material';
+import { Container, IconButton, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material';
 import { IInvoice } from '../../../interfaces/IInvoice';
 import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
 import { useUserContext } from '../context/UserProvider';
@@ -26,9 +26,11 @@ const InvoiceDashboard: React.FC = () => {
 
     return (
         <div>
-            <h1>Invoices List</h1>
+            Back to invoices icon
+            <Typography variant="h2" sx={{ m: '25px 0 0 25px'}}>Invoices</Typography>
+            {/* Button to add invoice with client selection capability */}
             <p>Invoices should be listed from most recent. All will be linked to individual invoice. Will have the ability to search/filter by date or client name</p>
-            <Container maxWidth="md" sx={{ padding: 0, width: '100vw'}} >
+            <Container disableGutters maxWidth="md" sx={{ padding: "2%", width: '95vw'}} >
                     <Table>
                     <TableHead>
                         <TableRow>
@@ -51,8 +53,7 @@ const InvoiceDashboard: React.FC = () => {
                                     <LaunchIcon />
                                 </IconButton>
                             </StyledTableCell>
-                            {/* @ts-ignore */}
-                            <StyledTableCell sx={!invoice.hasPaid ? {color: "red"} : null} >{invoice.created_at.toString()}</StyledTableCell>
+                            <StyledTableCell sx={!invoice.hasPaid ? {color: "red"} : null} >{typeof invoice?.createdAt === "string" ? invoice.createdAt.split('T')[0] : "No date"}</StyledTableCell>
                             <StyledTableCell sx={!invoice.hasPaid ? {color: "red"} : null} >{invoice.invoiceName}</StyledTableCell>
                             {/* @ts-ignore */}
                             <StyledTableCell sx={!invoice.hasPaid ? {color: "red"} : null} >{invoice._id}</StyledTableCell>

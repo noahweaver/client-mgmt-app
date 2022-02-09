@@ -3,7 +3,7 @@ import AddClientForm from '../components/AddClientForm';
 import { useUserContext } from '../context/UserProvider';
 import { IClient } from '../../../interfaces/IClient';
 import { useNavigate } from 'react-router-dom';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import EditClientform from '../components/EditClientForm';
 import { Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography, useMediaQuery, Container} from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';

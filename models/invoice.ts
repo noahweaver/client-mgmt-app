@@ -55,15 +55,11 @@ export const invoiceSchema = new Schema ({
         ref: "Client",
         required: true
     },
-    created_at: {
-        type: Date,
-        index: true,
-        default: Date.now()
-    }
+
 },
 {
     timestamps: {
-        currentTime: () => Math.floor(Date.now() / 1000)
+
     }
 }
 );

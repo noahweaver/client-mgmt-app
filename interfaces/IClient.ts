@@ -9,7 +9,6 @@ export interface IClient extends Document, SchemaTimestampsConfig {
     phone: string;
     altPhone?: string;
     email: string;
-    // invoices?: [IInvoice];
     moneyOwed: boolean;
     user: {
         type: Schema.Types.ObjectId,

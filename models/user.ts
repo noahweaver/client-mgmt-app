@@ -26,7 +26,7 @@ export const userSchema = new Schema<IUser>({
 },
 {
     timestamps: {
-        currentTime: () => Math.floor(Date.now() / 1000)
+
     }
 });
 
