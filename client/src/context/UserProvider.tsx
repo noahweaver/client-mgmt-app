@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { IClient } from '../../../interfaces/IClient';
+import { IInvoice } from '../../../interfaces/IInvoice';
 
 const userAxios = axios.create()
 
@@ -143,10 +144,21 @@ export const UserProvider: React.FC = ({ children }) => {
         console.log("getUserInvoices was called")
         userAxios.get(`/api/invoice/user/${userState.user._id}`)
             .then(res => {
+                const userInvoiceList = res.data.sort(function(a: IInvoice, b: IInvoice) {
+                    if(typeof a.createdAt === "string" && typeof b.createdAt === "string"){
+                        if (a?.createdAt < b?.createdAt){
+                            return 1;
+                        }
+                        if (a?.createdAt > b?.createdAt){
+                            return -1;
+                        }
+                }
+                return 0;
+                })
                 //@ts-ignore
                 setUserState(prevState => ({
                     ...prevState,
-                    invoices: res.data
+                    invoices: userInvoiceList
                 }))
             })
             .catch(err => console.log(err))

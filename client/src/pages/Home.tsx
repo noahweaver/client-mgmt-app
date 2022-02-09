@@ -21,7 +21,6 @@ const Item = styled(Paper)(({ theme }) => ({
     }));
 
 
-
 const Home: React.FC = () => {
 
     const navigate = useNavigate();
@@ -42,7 +41,6 @@ const Home: React.FC = () => {
             cursor: "pointer",
         }
     };
-
 
     return (
         <Box sx={{ width: '85%', margin: 'auto' }}>
