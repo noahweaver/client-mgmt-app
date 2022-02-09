@@ -112,13 +112,13 @@ const Invoice: React.FC = () => {
     }
                     
     const InvoiceStyle = {
-        mx: "auto", 
         border: "2px solid #000", 
         borderRadius: 2,
         margin: "2% 4%",
-        height: "1100px",
+        height: "1000px",
         boxShadow:" 10px 5px 5px #767676",
         backgroundColor: "#ffff",
+        width: "90%",
         header: {
            backgroundColor: theme.palette.primary.light,
             color: "#000",
@@ -126,12 +126,13 @@ const Invoice: React.FC = () => {
             border: "1px solid transparent",
             borderRadius: "8px 8px 0 0",
             borderBottom: "2px solid #000",
+            display: "flex",
+            padding: 0,
           userInfo: {
             border: "2px solid #000", 
             borderRadius: 2,
             height: "55%",
             width: "40%",
-            float: "right",
             margin: 5,
             padding: 5
           },
@@ -140,7 +141,6 @@ const Invoice: React.FC = () => {
             borderRadius: 2,
             height: "55%",
             width: "40%",
-            float: "left",
             margin: 5,
             padding: 3
           }
@@ -175,9 +175,9 @@ const Invoice: React.FC = () => {
     }
 
     return (
-    <div style={{ backgroundColor: "#dddddd55", height: "95vh"}}>
+    <div style={{ backgroundColor: "#dddddd55", height: "94.5vh"}}>
         {invoice && 
-        <Container component="div">
+        <>
             {/* @ts-ignore */}
             <Typography variant="h5"> <b>Invoice #:</b> {invoice?._id} </Typography>
             <FormGroup>
@@ -191,9 +191,9 @@ const Invoice: React.FC = () => {
                     label="Has this invoice been paid?" />
             </FormGroup>
             when invoice is checked as paid, needs to save paid date
-            <Box maxWidth="md" sx={ InvoiceStyle }>
+            <Container maxWidth="md" disableGutters sx={ InvoiceStyle } >
             {/* add company info as optional for user model? */}
-                <Box sx={InvoiceStyle.header}>
+                <Container  disableGutters sx={InvoiceStyle.header}>
                     <Box sx={InvoiceStyle.header.userInfo}>
                         <Typography><b>Name:</b> {user.username}</Typography>
                         <Typography><b>Employee ID:</b> {user._id}</Typography>
@@ -204,7 +204,7 @@ const Invoice: React.FC = () => {
                         <Typography variant="body1">{client?.phone}</Typography> 
                         <Typography variant="body1">{client?.email}</Typography> 
                     </Box>
-                </Box>   
+                </Container>   
                 <Box sx={InvoiceStyle.invoiceInfo}>
                     {/* @ts-ignore */}
                     <Typography variant="body1"><b>Invoice #: </b>{invoice._id}</Typography>
@@ -246,8 +246,8 @@ const Invoice: React.FC = () => {
             <br/>
             End of Invoice */}
             
-            </Box>
-        </Container>}
+            </Container>
+        </>}
             {/* edit button/form
             <br/>
             delete button */}
