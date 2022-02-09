@@ -26,7 +26,6 @@ const InvoiceDashboard: React.FC = () => {
 
     return (
         <div>
-            Back to invoices icon
             <Typography variant="h2" sx={{ m: '25px 0 0 25px'}}>Invoices</Typography>
             {/* Button to add invoice with client selection capability */}
             <p>Invoices should be listed from most recent. All will be linked to individual invoice. Will have the ability to search/filter by date or client name</p>

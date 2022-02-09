@@ -3,11 +3,15 @@ import axios from 'axios';
 import { IInvoice } from '../../../interfaces/IInvoice';
 import { useParams } from 'react-router-dom';
 import { InvoiceContext } from '../context/InvoiceProvider';
-import { Box, Checkbox, Container, FormControlLabel, FormGroup, Table, TableBody, TableHead, TableRow, Theme, Typography, useTheme } from '@mui/material';
+import { Box, Checkbox, Container, FormControlLabel, FormGroup, Table, TableBody, TableHead, TableRow, Theme, Typography, useTheme, IconButton } from '@mui/material';
+import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import { useUserContext } from '../context/UserProvider';
 import { IClient } from '../../../interfaces/IClient';
 import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
-import { resolve } from 'path/posix';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 const userAxios = axios.create();
 
@@ -40,6 +44,7 @@ const Invoice: React.FC = () => {
     const [client, setClient] = useState<IClient>();
     const { invoiceId } = useParams();
     const theme: Theme = useTheme();
+    const navigate = useNavigate();
 
     
 
@@ -114,11 +119,11 @@ const Invoice: React.FC = () => {
     const InvoiceStyle = {
         border: "2px solid #000", 
         borderRadius: 2,
-        margin: "2% 4%",
+        margin: "5% auto",
         height: "1000px",
         boxShadow:" 10px 5px 5px #767676",
         backgroundColor: "#ffff",
-        width: "90%",
+        width: "85%",
         header: {
            backgroundColor: theme.palette.primary.light,
             color: "#000",
@@ -175,36 +180,43 @@ const Invoice: React.FC = () => {
     }
 
     return (
-    <div style={{ backgroundColor: "#dddddd55", height: "94.5vh"}}>
+    <div >
+        <IconButton sx={{ fontSize: 13 }}onClick={() => {
+                    navigate('/invoices')
+                    }}>
+            <ArrowBackSharpIcon /> Go Back to invoice list
+        </IconButton>
         {invoice && 
         <>
-            {/* @ts-ignore */}
-            <Typography variant="h5"> <b>Invoice #:</b> {invoice?._id} </Typography>
-            <FormGroup>
-                <FormControlLabel 
-                    control={<Checkbox 
-                        defaultChecked={invoice?.hasPaid}
-                        //@ts-ignore
-                        // onChange={(e: any) => { setInvoice((prevState: IInvoice) => ({...prevState, hasPaid: e.target.checked})); handleChecked(); }} />
-                        onChange={handleChecked}
-                    /> } 
-                    label="Has this invoice been paid?" />
-            </FormGroup>
-            when invoice is checked as paid, needs to save paid date
-            <Container maxWidth="md" disableGutters sx={ InvoiceStyle } >
+            <Box sx={{ m: '2% 4%' }}>
+                {/* @ts-ignore */}
+                <Typography variant="h5"> <b>Invoice #:</b> {invoice?._id} </Typography>
+                <FormGroup>
+                    <FormControlLabel 
+                        control={<Checkbox 
+                            defaultChecked={invoice?.hasPaid}
+                            //@ts-ignore
+                            // onChange={(e: any) => { setInvoice((prevState: IInvoice) => ({...prevState, hasPaid: e.target.checked})); handleChecked(); }} />
+                            onChange={handleChecked}
+                        /> } 
+                        label="Has this invoice been paid?" />
+                </FormGroup>
+            DEV NOTE: when invoice is checked as paid, needs to save paid date
+            </Box>
+            
+            <Container maxWidth="md" disableGutters style={{ position: "relative"}} sx={ InvoiceStyle } >
             {/* add company info as optional for user model? */}
                 <Container  disableGutters sx={InvoiceStyle.header}>
-                    <Box sx={InvoiceStyle.header.userInfo}>
+                    <Container sx={InvoiceStyle.header.userInfo}>
                         <Typography><b>Name:</b> {user.username}</Typography>
-                        <Typography><b>Employee ID:</b> {user._id}</Typography>
                         <Typography><b>Date: </b> {typeof invoice?.createdAt === "string" ? invoice.createdAt.split('T')[0] : "No date"}</Typography>
-                    </Box>
-                    <Box sx={InvoiceStyle.header.clientInfo}>
+                    </Container>
+                    <Container sx={InvoiceStyle.header.clientInfo}>
                         <Typography variant="h6"><b>Bill to:</b> {client?.lastName}, {client?.firstName}</Typography>
                         <Typography variant="body1">{client?.address}</Typography> 
                         <Typography variant="body1">{client?.phone}</Typography> 
                         <Typography variant="body1">{client?.email}</Typography> 
-                    </Box>
+                    </Container>
                 </Container>   
                 <Box sx={InvoiceStyle.invoiceInfo}>
                     {/* @ts-ignore */}
@@ -246,7 +258,7 @@ const Invoice: React.FC = () => {
             Any other info here
             <br/>
             End of Invoice */}
-            
+            <Typography variant="body2" sx={{ position: "absolute", bottom: 0, right: 5 }}><b>Employee ID:</b> {user._id}</Typography>
             </Container>
         </>}
             {/* edit button/form
