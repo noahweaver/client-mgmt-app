@@ -34,6 +34,14 @@ export const invoiceSchema = new Schema ({
         }, 
   
     }],
+    price: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    feesAndTaxes: {
+        type: Number,
+    },
     hasPaid: {
         type: Boolean,
         required: true,

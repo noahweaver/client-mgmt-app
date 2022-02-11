@@ -10,6 +10,8 @@ export interface IInvoice extends Document, SchemaTimestampsConfig{
     invoiceName: string,
     datePaid?:Date,
     tasks: Array<ITask>,
+    feesAndTaxes?: number,
+    totalPrice: number,
     hasPaid: boolean,
     notes?: string,
     userId: {
@@ -26,6 +28,8 @@ export interface IAddInvoiceForm {
     invoiceName: string,
     datePaid?: Date,
     tasks: Array<ITask>,
+    feesAndTaxes?: number,
+    totalPrice: number,
     hasPaid: boolean,
     notes?: string,
     userId: string,
