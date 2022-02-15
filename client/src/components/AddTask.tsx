@@ -31,12 +31,7 @@ const AddTask: React.FC<Props> = (props) => {
             [name]: value
         }))
     }
-
-    function handleSubmit() {
-        console.log("submit task")
-        //add task
-    }
-
+    
     function onCancel() {
         console.log("cancel adding task")
         props.setAddingTask(false);
@@ -73,6 +68,7 @@ const AddTask: React.FC<Props> = (props) => {
                 autoFocus={false}
                 fullWidth
                 value={inputs?.materialsCost}
+                type="number"
                 onChange={handleChange}
                 label="Mats Cost"
             />
@@ -93,12 +89,13 @@ const AddTask: React.FC<Props> = (props) => {
                 name="price"
                 autoFocus={false}
                 value={inputs?.price}
+                type="number"
                 label="Price"
                 onChange={handleChange}
             />
         </StyledTableCell>            
         <StyledTableCell style={{ width: '100px' }}>
-            <IconButton size="small" onClick={() => handleSubmit()}>
+            <IconButton size="small" onClick={() => props.addTask(inputs)}>
                 <CheckIcon />
             </IconButton>
             <IconButton size="small" onClick={() => { onCancel(); }}>

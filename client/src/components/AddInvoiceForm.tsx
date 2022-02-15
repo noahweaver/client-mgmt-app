@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyledTableCell, StyledTableRow } from './StyledTable';
 import { Box, Table, TableRow, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery, Checkbox, FormControlLabel, FormGroup, TableHead, TableBody } from '@mui/material';
 import { useUserContext } from '../context/UserProvider';
@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme, Theme } from '@mui/material/styles';
 import { IInvoice, IAddInvoiceForm } from '../../../interfaces/IInvoice';
 import { ITask } from '../../../interfaces/ITask';
-import { userInfo } from 'os';
 import { RedditTextField } from './RedditTextField'; 
 import { InvoiceContext } from '../context/InvoiceProvider';
 import AddTask from './AddTask';
@@ -40,14 +39,15 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
         tasks: [],
         hasPaid: false,
         feesAndTaxes: 0,
-        totalPrice: 0, //add sum of all values here?
+        totalPrice: 0,
         notes: "",
         userId: _id,
         }
 
     const [addingTask, setAddingTask] = useState(false);
     const [newInvoice, setNewInvoice] = useState<IAddInvoiceForm>(initInputs);
-    const [tasks, setTasks] = useState<Array<ITask>>(); // make constructor in ITask?
+    const [tasksPrice, setTasksPrice] = useState(0)
+    const [tasks, setTasks] = useState<Array<ITask>>([]); 
     const { addInvoice } = useContext(InvoiceContext) as invoiceFormType;
     const theme: Theme = useTheme();
 
@@ -58,7 +58,7 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
             marginBottom: '25px',
         },
         button: {
-            gridColumn: 'span 2',
+            // gridColumn: 'span 2',
             width: '50%',
             marginLeft: '25%',
             '&:hover': {
@@ -68,32 +68,80 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
         }
     }
 
+    useEffect(() => {
+        calculateTotalPrice();
+    }, [tasksPrice, newInvoice.tasks, newInvoice.feesAndTaxes])
+
     function handleChange(e: any){
         const {name, value} = e.target;
         setNewInvoice(prevInputs => ({
             ...prevInputs,
             [name]: value
+        }));
+    }
+
+    function handlePriceChange(e: any){
+        setNewInvoice(prevInputs => ({
+            ...prevInputs,
+            feesAndTaxes: parseInt(e.target.value)
+        }));
+    }
+
+    function calculateTaskPrice(taskArr: ITask[]){
+        let pricesSum = 0;
+        for (let i = 0; i < taskArr.length; i++){
+            //@ts-ignore
+           pricesSum += parseInt(taskArr[i].price)
+        }
+        setTasksPrice(pricesSum);
+    }
+
+    function calculateTotalPrice(){      
+        const ft = newInvoice.feesAndTaxes;
+        const tp = tasksPrice;
+        //@ts-ignore
+        const total = parseInt(ft) + parseInt(tp)
+        //@ts-ignore
+        const ptp = parseInt(tp)
+        if(ft){
+            setNewInvoice(prevState => ({
+            ...prevState, 
+            totalPrice: total
         }))
+        } else {
+            setNewInvoice(prevState => ({
+                ...prevState, 
+                totalPrice: ptp
+            }))
+    
+        }
+        
+    }
+
+    function addTask(task: ITask){
+        const taskArr = newInvoice.tasks.concat(task);
+        setNewInvoice(prevState => ({
+            ...prevState,
+            tasks: taskArr
+        }));
+        calculateTaskPrice(taskArr);
+        setAddingTask(false);
+    }
+
+    //STILL NEED TO TEST THIS
+    function removeTask(task: ITask) {
+        //remove task from state array
+        const newTaskArr = tasks?.filter(t => t.title !== task.title);
+        setTasks(newTaskArr);
+        calculateTaskPrice(newTaskArr);
     }
 
     function handleInvoiceAdd(e: any){
         e.preventDefault();
+        //make sure the total and price are both added to the newInvoice state
         setAddingInvoiceToggle(false);
+        //FROM CONTEXT?
         addInvoice(newInvoice, clientId);
-    }
-
-    function calculateTotalPrice(){
-        //map tasks and add total together
-    }
-
-    function addTask(task: ITask){
-        //receive task and add to state array
-        console.log("add task")
-    }
-
-    function removeTask(task: ITask) {
-        //remove task from state array
-        console.log("remove task")
     }
 
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
@@ -160,7 +208,7 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
                                 />
                             </StyledTableRow>
                             }
-                            {tasks && tasks.map((task: ITask) => 
+                            {newInvoice.tasks && newInvoice.tasks.map((task: ITask) => 
                             //@ts-ignore
                             <StyledTableRow key={task._id}>
                                 <StyledTableCell>{task.title}</StyledTableCell>
@@ -182,7 +230,6 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
                     <Button sx ={{ gridColumn: "1 / 2" }}variant="contained" color="primary" onClick={() => { setAddingTask(true); }}>
                         Add Task
                     </Button>
-
                     <RedditTextField 
                         onChange={handleChange}
                         label="Notes"
@@ -190,7 +237,7 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
                         rows={4}
                         name="notes"
                         value={newInvoice.notes}
-                        style={{ gridColumn: '1 / 3'}}
+                        style={{ gridColumn: '1 / 5'}}
                     />
                     <RedditTextField 
                         required
@@ -198,21 +245,18 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
                         label="Fees and Taxes"
                         fullWidth
                         autoFocus={false}
-                        onChange={handleChange}
+                        onChange={handlePriceChange}
                         value={newInvoice.feesAndTaxes}
-                        helperText="Taxes = 9% + fees"
-                        style={{ gridColumn: "3 / 4"}}
+                        style={{ gridColumn: "1 / 2"}}
                     />
                     <RedditTextField 
-                        required
                         name="totalPrice"
                         label="Total Price"
+                        disabled
                         fullWidth
                         autoFocus={false}
-                        onChange={handleChange}
-                        helperText="Sum of task prices + taxes + fees = Total Price" 
                         value={newInvoice.totalPrice}
-                        style={{ gridColumn: "4 / 5"}}
+                        style={{ gridColumn: "1 / 2"}}
                     />
                     <FormGroup>
                         <FormControlLabel 
@@ -224,14 +268,16 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
                             />} 
                             label="Has this invoice been paid yet?" />
                     </FormGroup>
-                    <Button 
-                        type="submit" 
-                        variant="outlined" 
-                        onClick={handleInvoiceAdd}
-                        sx={DialogStyle.button}
-                        >
-                        Submit
-                    </Button>
+                    <Box sx={{ gridColumn: "1 / 5"}}>
+                        <Button 
+                            type="submit" 
+                            variant="outlined" 
+                            onClick={handleInvoiceAdd}
+                            sx={DialogStyle.button}
+                            >
+                            Submit
+                        </Button>
+                    </Box>
                 </Box>
             </DialogContent>
         </Dialog>

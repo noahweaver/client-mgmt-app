@@ -34,7 +34,7 @@ export const invoiceSchema = new Schema ({
         }, 
   
     }],
-    price: {
+    totalPrice: {
         type: Number,
         required: true,
         default: 0
