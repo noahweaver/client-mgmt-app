@@ -140,7 +140,7 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
         e.preventDefault();
         //make sure the total and price are both added to the newInvoice state
         setAddingInvoiceToggle(false);
-        //FROM CONTEXT?
+        //FROM CONTEXT
         addInvoice(newInvoice, clientId);
     }
 
@@ -155,8 +155,8 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
                 sx={ DialogStyle.dialogTitle }
             >New Invoice
                 <IconButton
-                aria-label="close"
                 onClick={() => setAddingInvoiceToggle(false)}
+                aria-label="close"
                 sx={{
                     position: 'absolute',
                     right: 8,
@@ -227,7 +227,11 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
 
                         </TableBody>
                     </Table>
-                    <Button sx ={{ gridColumn: "1 / 2" }}variant="contained" color="primary" onClick={() => { setAddingTask(true); }}>
+                    <Button 
+                        sx ={{ gridColumn: "1 / 2" }} 
+                        variant="contained" 
+                        color="primary" 
+                        onClick={() => { setAddingTask(true); }}>
                         Add Task
                     </Button>
                     <RedditTextField 

@@ -67,6 +67,7 @@ invoiceRouter.get("/:invoiceId", (req: IRequest, res: IResponse, next: NextFunct
 //Update invoice (only by user)
 invoiceRouter.put('/:invoiceId', (req: IRequest, res: IResponse, next: NextFunction) => {
   Invoice.findByIdAndUpdate(
+    // do I need to include clientId?
     { _id: req.params.invoiceId, user: req.user._id },
     req.body,
     { new: true },
@@ -82,5 +83,19 @@ invoiceRouter.put('/:invoiceId', (req: IRequest, res: IResponse, next: NextFunct
 })
 
 //Delete invoice
+invoiceRouter.delete('/:invoiceId', (req: IRequest, res: IResponse, next: NextFunction) => {
+  Invoice.findOneAndDelete(
+    // do I need to include clientId?
+    { _id: req.params.invoiceId, user: req.user._id },
+    (err: any, deletedInvoice: any) => {
+      if (err) {
+        res.status(500)
+        return next(err)
+      }
+      return res.status(200).send(`Successfully deleted ${deletedInvoice.invoiceName}`)
+    }
+  )
+})
+
 
 module.exports = invoiceRouter;

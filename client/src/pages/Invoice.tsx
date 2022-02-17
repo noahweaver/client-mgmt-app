@@ -3,8 +3,10 @@ import axios from 'axios';
 import { IInvoice } from '../../../interfaces/IInvoice';
 import { useParams } from 'react-router-dom';
 import { InvoiceContext } from '../context/InvoiceProvider';
-import { Box, Checkbox, Container, FormControlLabel, FormGroup, Table, TableBody, TableHead, TableRow, Theme, Typography, useTheme, IconButton } from '@mui/material';
+import { Box, Checkbox, Container, FormControlLabel, FormGroup, Table, TableBody, TableHead, TableRow, Theme, Typography, useTheme, IconButton, Button } from '@mui/material';
 import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { useUserContext } from '../context/UserProvider';
 import { IClient } from '../../../interfaces/IClient';
 import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
@@ -26,7 +28,7 @@ userAxios.interceptors.request.use(config => {
 type invoiceType = {
     addInvoice: () => void,
     editInvoice: (invoice: IInvoice | undefined) => void,
-    deleteInvoice: () => void
+    deleteInvoice: (invoice: IInvoice | undefined) => void,
 }
  type userType = {
     user: {
@@ -39,9 +41,10 @@ const Invoice: React.FC = () => {
 
     const { addInvoice, editInvoice, deleteInvoice } = useContext(InvoiceContext) as invoiceType
     const { user } = useUserContext() as userType;
-    const [invoice, setInvoice] = useState<IInvoice | undefined>();
+    const [invoice, setInvoice] = useState<IInvoice>();
     const [invoiceTotal, setInvoiceTotal] = useState(0);
     const [client, setClient] = useState<IClient>();
+    const [deleted, setDeleted] = useState(false);
     const { invoiceId } = useParams();
     const theme: Theme = useTheme();
     const navigate = useNavigate();
@@ -93,7 +96,8 @@ const Invoice: React.FC = () => {
     function handleDelete(){
         //dialog toggle
         //delete confirmation modal
-        deleteInvoice();
+        deleteInvoice(invoice);
+        setDeleted(true);
     }
 
     function gatherInvoiceTotal(data: IInvoice){
@@ -181,6 +185,7 @@ const Invoice: React.FC = () => {
 
     return (
     <div >
+        {/* This goes to invoice even if navigated through the client. There should be a better way to give this option. Add a button to go to client? */}
         <IconButton sx={{ fontSize: 13 }}onClick={() => {
                     navigate('/invoices')
                     }}>
@@ -261,13 +266,24 @@ const Invoice: React.FC = () => {
             <Typography variant="body2" sx={{ position: "absolute", bottom: 0, right: 5 }}><b>Employee ID:</b> {user._id}</Typography>
             </Container>
         </>}
-            {/* edit button/form
-            <br/>
-            delete button */}
-            
-            
-            {/* <button>Create PDF</button> */}
-
+        <Button
+                variant="contained"
+                color="primary"
+                sx={{ marginLeft: "7%"}}>
+                Download PDF (Coming soon!)
+        </Button>
+        <Box sx={{float: "right"}}>
+            <Button> 
+                <IconButton>
+                    <EditIcon />
+                </IconButton>
+            </Button>
+            <Button>
+                <IconButton onClick={() => handleDelete()}>
+                    <DeleteIcon />
+                </IconButton>
+            </Button>
+        </Box>
     </div>
     )
 }
