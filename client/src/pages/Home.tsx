@@ -67,10 +67,10 @@ const Home: React.FC = () => {
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <Item sx={style.container} onClick={() => {
                     navigate('/tasks')
-                    }}> Tasks (COMING SOON!) </Item>
+                    }}> Tasks (COMING IN VERSION 2!) </Item>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
-                    <Item sx={style.container}> Some other feature </Item>
+                    <Item sx={style.container}> My Company (COMING IN VERSION 2!) </Item>
                 </Grid>
             </Grid>
         </Box>

@@ -29,7 +29,7 @@ export const InvoiceProvider: React.FC = ({ children }) => {
     }
 
     function editInvoice(updatedInvoice: IInvoice) {
-        console.log("context editInvoice",updatedInvoice);
+        console.log("context editInvoice", updatedInvoice);
         //@ts-ignore
         userAxios.put(`/api/invoice/${updatedInvoice._id}`, updatedInvoice)
             .then(res => {

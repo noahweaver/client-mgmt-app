@@ -4,7 +4,7 @@ import { IInvoice } from '../../../interfaces/IInvoice';
 import { useParams } from 'react-router-dom';
 import { InvoiceContext } from '../context/InvoiceProvider';
 import { Box, Checkbox, Container, FormControlLabel, FormGroup, Table, TableBody, TableHead, TableRow, Theme, Typography, useTheme, IconButton, Button } from '@mui/material';
-import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useUserContext } from '../context/UserProvider';
@@ -36,10 +36,15 @@ type invoiceType = {
         username: string
     }
  }
+type userInvoiceType = {
+    getUserInvoices: () => void
+}
+
 
 const Invoice: React.FC = () => {
 
     const { addInvoice, editInvoice, deleteInvoice } = useContext(InvoiceContext) as invoiceType
+    const { getUserInvoices } = useUserContext() as userInvoiceType;
     const { user } = useUserContext() as userType;
     const [invoice, setInvoice] = useState<IInvoice>();
     const [invoiceTotal, setInvoiceTotal] = useState(0);
@@ -110,14 +115,15 @@ const Invoice: React.FC = () => {
             setInvoiceTotal(sum)
         }
     }
-    //createPDF function
 
-    //create printerfriendly
+    //createPDF/printer friendly function
 
     function handleChecked(e: any){
+        console.log("handleChecked")
         //@ts-ignore
-        invoice.hasPaid = !invoice?.hasPaid   
+        invoice.hasPaid = e.target.checked;
         editInvoice(invoice);
+        getUserInvoices();
     }
                     
     const InvoiceStyle = {
@@ -185,12 +191,20 @@ const Invoice: React.FC = () => {
 
     return (
     <div >
-        {/* This goes to invoice even if navigated through the client. There should be a better way to give this option. Add a button to go to client? */}
-        <IconButton sx={{ fontSize: 13 }}onClick={() => {
-                    navigate('/invoices')
+        <Box sx={{ float: "right", display: "flex", flexDirection: "column" }}>
+            <IconButton sx={{ fontSize: 13, float: "right" }}onClick={() => {
+                //@ts-ignore
+                    navigate(`/clientdashboard/${client?._id}`)
                     }}>
-            <ArrowBackSharpIcon /> Go Back to invoice list
-        </IconButton>
+                {`Go to ${client?.lastName}, ${client?.firstName}`} <NavigateNextIcon /> 
+            </IconButton>
+            <IconButton sx={{ fontSize: 13, float: "right" }}onClick={() => {
+                //@ts-ignore
+                    navigate(`/invoices`)
+                    }}>
+                Go to Invoices <NavigateNextIcon /> 
+            </IconButton>
+        </Box>
         {invoice && 
         <>
             <Box sx={{ m: '2% 4%' }}>

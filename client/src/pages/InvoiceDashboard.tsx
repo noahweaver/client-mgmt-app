@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container, IconButton, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material';
 import { IInvoice } from '../../../interfaces/IInvoice';
 import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
@@ -9,20 +9,13 @@ import { useNavigate } from 'react-router-dom';
 
 type invoiceDashboardType = {
     invoices: Array<IInvoice>,
-    // userState: {invoices: [IInvoice]}
 }
 
 
 const InvoiceDashboard: React.FC = () => {
 
     const { invoices } = useUserContext() as invoiceDashboardType;
-    const [invoiceList, setInvoiceList] = useState<Array<IInvoice>>();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        setInvoiceList(invoices)
-    }, [invoices])
-
 
     return (
         <div>
@@ -41,7 +34,7 @@ const InvoiceDashboard: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {invoiceList && invoiceList.map((invoice: IInvoice) => 
+                        {invoices && invoices.map((invoice: IInvoice) => 
                         //@ts-ignore
                         <StyledTableRow key={invoice._id} >
                             <StyledTableCell sx={!invoice.hasPaid ? {color: "red"} : null} >

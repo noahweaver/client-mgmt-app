@@ -218,7 +218,8 @@ export const UserProvider: React.FC = ({ children }) => {
                 restAuthErr,
                 deleteClient,
                 updateClient,
-                authErr
+                authErr, 
+                getUserInvoices
             }} >
 
             {children}
