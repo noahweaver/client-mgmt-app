@@ -65,19 +65,6 @@ const ClientDashboard: React.FC = () => {
         console.log("Clientdashboard handlechange was called")
     }
 
-    //GET Single Client by Params
-    // function getSingleClient(){
-    //     console.log("getSingleClient was called")
-    //     console.log("clientId:", currentClient?._id)
-    //     userAxios.get(`/api/client/${currentClient?._id}`)
-    //       .then(res => {
-    //           console.log(res.data)
-    //           setCurrentClient({...res.data})
-    //       })
-    //       .then(() => console.log(currentClient))
-    //       .catch((err: any)=> console.log(err))
-    // }
-
     function handleDelete() {
         console.log("handleDelete was called");
         deleteClient(currentClient);
@@ -88,10 +75,7 @@ const ClientDashboard: React.FC = () => {
     function handleEdit(updatedClient: IClient | undefined) {
         updateClient(updatedClient);
         setCurrentClient(updatedClient);
-    }
-
-    //GET Client INVOICES
- 
+    } 
 
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
@@ -119,8 +103,6 @@ const ClientDashboard: React.FC = () => {
                             <StyledTableCell align="left">Client</StyledTableCell>
                             <StyledTableCell align="left">Phone</StyledTableCell>
                             <StyledTableCell align="left">Address</StyledTableCell>
-                            <StyledTableCell align="left">Money Owed</StyledTableCell>
-                            {/* <StyledTableCell align="left">Invoices</StyledTableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -130,16 +112,14 @@ const ClientDashboard: React.FC = () => {
                     <StyledTableRow key={client._id} >
                         <StyledTableCell>
                             <Button 
-                                sx={client.moneyOwed ? {color: "red"} : null}
                                 type="button" 
                                 onClick={() => {handleOpen(client); setOpenClient(true); }}>
                                 Open
                             </Button>
                         </StyledTableCell>
-                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.lastName}, {client.firstName} </StyledTableCell>
-                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.phone}</StyledTableCell>
-                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.address}</StyledTableCell>
-                        <StyledTableCell sx={client.moneyOwed ? {color: "red"} : null} >{client.moneyOwed ? "Yes" : "No"}</StyledTableCell>                        
+                        <StyledTableCell>{client.lastName}, {client.firstName} </StyledTableCell>
+                        <StyledTableCell>{client.phone}</StyledTableCell>
+                        <StyledTableCell>{client.address}</StyledTableCell>
                     </StyledTableRow>
                     )}
                     </TableBody>

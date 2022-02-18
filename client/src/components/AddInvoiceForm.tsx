@@ -15,7 +15,8 @@ import AddTask from './AddTask';
   interface IInvoiceFormProps {
     setAddingInvoiceToggle: (value: React.SetStateAction<boolean>) => void ,
     addingInvoice: boolean,
-    clientId?: string
+    clientId?: string,
+    getClientInvoices: () => void
 }
 
 type invoiceFormType ={
@@ -30,7 +31,7 @@ type clientFormType ={
 
 
 
-const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, addingInvoice, clientId }) => {
+const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
     
     const { user: { _id } } = useUserContext() as clientFormType;
 
@@ -138,24 +139,25 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = ({ setAddingInvoiceToggle, a
 
     function handleInvoiceAdd(e: any){
         e.preventDefault();
-        //make sure the total and price are both added to the newInvoice state
-        setAddingInvoiceToggle(false);
+        props.setAddingInvoiceToggle(false);
         //FROM CONTEXT
-        addInvoice(newInvoice, clientId);
+        addInvoice(newInvoice, props.clientId);
+        
+        props.getClientInvoices();
     }
 
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     
     return (
         <Dialog
-            open={addingInvoice}
+            open={props.addingInvoice}
             fullScreen={fullScreen}
         >
             <DialogTitle
                 sx={ DialogStyle.dialogTitle }
             >New Invoice
                 <IconButton
-                onClick={() => setAddingInvoiceToggle(false)}
+                onClick={() => props.setAddingInvoiceToggle(false)}
                 aria-label="close"
                 sx={{
                     position: 'absolute',

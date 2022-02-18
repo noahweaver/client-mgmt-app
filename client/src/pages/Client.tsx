@@ -3,8 +3,9 @@ import axios, { AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import { IClient } from '../../../interfaces/IClient';
 import EditClientForm from '../components/EditClientForm';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Modal, styled, Theme, Typography, useTheme, useMediaQuery, CardContent, Card, CardActions, CardHeader, Container, Table, TableBody, TableHead, TableRow } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Modal, styled, Theme, Typography, useTheme, useMediaQuery, CardContent, Card, CardActions, CardHeader, Container, Table, TableBody, TableHead, TableRow, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -65,15 +66,13 @@ const Client: React.FC = () => {
         }
     }
 
-    //get by params
-    //maybe map through invoices in context?
-    //filter by most recent date
     function getClientInvoices(){
         console.log("getclientInvoices was called")
         //@ts-ignore
         userAxios.get(`/api/invoice/client/${clientId}`)
             .then(res => {
-                setClientInvoices(res.data)
+                setClientInvoices(res.data);
+                console.log(res.data);
             })
             .catch(err => console.log(err))
     }
@@ -89,7 +88,6 @@ const Client: React.FC = () => {
             .catch((err: any)=> console.log(err))
     }
     
-
     //ADD new invoice
     //context
 
@@ -100,7 +98,6 @@ const Client: React.FC = () => {
     //delete function
     //bring in from context
 
-    //edit
     function handleEdit(){
         console.log("handle edit was called")
         //this is where the edit will be submited from
@@ -112,30 +109,38 @@ const Client: React.FC = () => {
     
     return (
         <>  
+            <IconButton 
+                sx={{ fontSize: 13, float: "left"}}
+                onClick={() => {
+                //@ts-ignore
+                navigate(`/clientdashboard/`)
+                }}>
+                <ArrowBackIosNewIcon /> {`Go back to Rolodex`}
+            </IconButton>
             {!isEditing ? 
             <>
-            <Card>
-                <Typography>
-                Change this to some card header: {client?.firstName} {client?.lastName}
-                </Typography>
+            <Card sx={{ margin: "5% auto", width: "75%", backgroundColor:theme.palette.primary.light, boxShadow:" 10px 5px 5px #767676" }}>
+                <CardHeader 
+                    title={`${client?.lastName}, ${client?.firstName}`}
+                    subheader={`Client since ${typeof client?.createdAt === "string" ? client?.createdAt.split('T')[0] : "'No date listed'"}`}
+                />
                 <CardContent>
-                 <Typography sx={client?.moneyOwed ? {color: "red"} : null} variant="h6"><b>Money owed? {client?.moneyOwed ? "YES" : "NO"}</b></Typography>
-                <Typography variant="h6"><b>Address: </b> {client?.address}</Typography>
-                <Typography variant="h6"><b>Phone: </b>{client?.phone}</Typography>
-                <Typography variant="h6"><b>Email: </b>{client?.email}</Typography>
-                <Typography variant="h6"><b>Alternate Phone: </b>{client?.altPhone ? client?.altPhone : "Not listed"}</Typography>
-                <Typography variant="body1" ><b>Notes: </b>{client?.notes}</Typography>
+                    <Typography variant="h6"><b>Address: </b> {client?.address}</Typography>
+                    <Typography variant="h6"><b>Phone: </b>{client?.phone}</Typography>
+                    <Typography variant="h6"><b>Email: </b>{client?.email}</Typography>
+                    <Typography variant="h6"><b>Alternate Phone: </b>{client?.altPhone ? client?.altPhone : "Not listed"}</Typography>
+                    <Typography variant="body1" ><b>Notes: </b>{client?.notes}</Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions sx={{ float: "right" }}>
                     <IconButton onClick={()=> { setIsEditing(true); }}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => { setOpenDeleteDialog(true); }}>
-                    <DeleteIcon />
-                </IconButton>
+                        <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => { setOpenDeleteDialog(true); }}>
+                        <DeleteIcon />
+                    </IconButton>
                 </CardActions>                
-                </Card>                
-                <Typography variant="body1" ><b>Invoices: </b>{clientInvoices?.length}</Typography>
+            </Card>                
+                <Typography variant="body1" sx={{ marginLeft: "1.5%" }}><b>Invoices: </b>{clientInvoices?.length}</Typography>
                 <Button 
                     variant="outlined" 
                     onClick={() => setAddingInvoiceToggle(prev => !prev)} 
@@ -147,9 +152,10 @@ const Client: React.FC = () => {
                     setAddingInvoiceToggle={setAddingInvoiceToggle}
                     addingInvoice={addingInvoiceToggle}
                     clientId={clientId}
+                    getClientInvoices={getClientInvoices}
                 />
                 }
-                <Container maxWidth="md" sx={{ padding: 0, width: '100vw'}} >
+                <Container maxWidth="md" sx={{ padding: 2, marginBottom: 3,  width: '100vw'}} >
                     <Table>
                     <TableHead>
                         <TableRow>
@@ -183,7 +189,6 @@ const Client: React.FC = () => {
                 </TableBody>
                     </Table>
                 </Container>
-
             </>
             :
             <>
@@ -201,7 +206,6 @@ const Client: React.FC = () => {
             />
             </DialogContent>
             </BootstrapDialog>
-            
             </>
             }
 

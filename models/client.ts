@@ -28,10 +28,6 @@ export const clientSchema = new Schema<IClient>({
         type: String,
         required: true
     },
-    moneyOwed: {
-        type: Boolean,
-        default: false
-    },
     notes: {
         type: String
     },

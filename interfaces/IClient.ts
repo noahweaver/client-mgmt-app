@@ -9,7 +9,6 @@ export interface IClient extends Document, SchemaTimestampsConfig {
     phone: string;
     altPhone?: string;
     email: string;
-    moneyOwed: boolean;
     user: {
         type: Schema.Types.ObjectId,
         ref: "User"
@@ -25,7 +24,6 @@ export interface IAddClientForm {
     phone: string;
     altPhone?: string;
     email: string;
-    moneyOwed: boolean;
     userId: string;
     notes: string;
 }

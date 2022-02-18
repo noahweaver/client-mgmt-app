@@ -46,7 +46,7 @@ const Invoice: React.FC = () => {
     const { addInvoice, editInvoice, deleteInvoice } = useContext(InvoiceContext) as invoiceType
     const { getUserInvoices } = useUserContext() as userInvoiceType;
     const { user } = useUserContext() as userType;
-    const [invoice, setInvoice] = useState<IInvoice>();
+    const [invoice, setInvoice] = useState<IInvoice | undefined>();
     const [invoiceTotal, setInvoiceTotal] = useState(0);
     const [client, setClient] = useState<IClient>();
     const [deleted, setDeleted] = useState(false);
@@ -99,10 +99,10 @@ const Invoice: React.FC = () => {
             //datepaid
 
     function handleDelete(){
-        //dialog toggle
         //delete confirmation modal
         deleteInvoice(invoice);
         setDeleted(true);
+        setInvoice(undefined);
     }
 
     function gatherInvoiceTotal(data: IInvoice){
@@ -171,7 +171,7 @@ const Invoice: React.FC = () => {
             border: "1px solid #000"
         },
         total: {
-            height: "30px",
+            height: "50px",
             border: "1px solid #000",
             borderTop: "1px solid transparent",
             width: "25%",
@@ -267,7 +267,8 @@ const Invoice: React.FC = () => {
                 </TableBody>
             </Table>
             <Box sx={InvoiceStyle.total}>
-                <Typography sx={{paddingRight: "25px", textAlign: "end"}}><b>Total:</b> $ {invoiceTotal}</Typography>
+                <Typography sx={{paddingRight: "25px", textAlign: "end"}}><b>Fees and Taxes:</b> $ {invoice.feesAndTaxes}</Typography>
+                <Typography sx={{paddingRight: "25px", textAlign: "end"}}><b>Total:</b> $ {invoice.totalPrice}</Typography>
             </Box>
             <Box>
                 <Typography variant="body2" sx={ InvoiceStyle.notes }><b> Notes: </b> {invoice.notes}</Typography> 

@@ -36,14 +36,8 @@ const ClientModal: React.FC<Props> = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [clientInvoices, setClientInvoices] = useState<Array<IInvoice | undefined>>();
-
-    const [editClient, setEditClient] = useState(false)
-    const [editClientInput, setEditClientInput] = useState()
-    const { clientId } = useParams();
     const navigate = useNavigate();
 
-
-    //useEffect
     useEffect(() => {
         getClientInvoices();
         setClient(props.currentClient);
@@ -56,30 +50,20 @@ const ClientModal: React.FC<Props> = (props) => {
             .then(res => {
                 setClientInvoices(res.data)
             })
-            // .then(res => {
-            //     //@ts-ignore
-            //     setClient(prevState => ({
-            //         ...prevState,
-            //         invoices: [res.data]
-            //     }))
-            // })
             .catch(err => console.log(err))
     }
     
-
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     
     return (
         <>
-        
         <BootstrapDialog
             open={props.openClient}
             onClose={props.onClose}
             aria-labelledby="customized-dialog-title"
             fullScreen={fullScreen}
             >
-            
             {!isEditing ? 
             <>
             <BootstrapDialogTitle 
@@ -95,7 +79,6 @@ const ClientModal: React.FC<Props> = (props) => {
                 </IconButton>
             </BootstrapDialogTitle>
             <DialogContent>
-                <Typography sx={props.currentClient?.moneyOwed ? {color: "red"} : null} variant="h6"><b>Money owed? {props.currentClient?.moneyOwed ? "YES" : "NO"}</b></Typography>
                 <Typography variant="h6"><b>Address: </b> {props.currentClient?.address}</Typography>
                 <Typography variant="h6"><b>Phone: </b>{props.currentClient?.phone}</Typography>
                 <Typography variant="h6"><b>Email: </b>{props.currentClient?.email}</Typography>
