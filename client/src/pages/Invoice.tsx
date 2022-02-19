@@ -208,6 +208,7 @@ const Invoice: React.FC = () => {
         {invoice && 
         <>
             <Box sx={{ m: '2% 4%' }}>
+            <Typography variant="h5"> <b>Invoice name: </b> {invoice?.invoiceName ? invoice?.invoiceName : "No invoice name listed"} </Typography>
                 {/* @ts-ignore */}
                 <Typography variant="h5"> <b>Invoice #:</b> {invoice?._id} </Typography>
                 <FormGroup>
@@ -238,6 +239,7 @@ const Invoice: React.FC = () => {
                     </Container>
                 </Container>   
                 <Box sx={InvoiceStyle.invoiceInfo}>
+                    <Typography variant="h5"> <b>Invoice name: </b> {invoice?.invoiceName ? invoice?.invoiceName : "No invoice name listed"} </Typography>
                     {/* @ts-ignore */}
                     <Typography variant="body1"><b>Invoice #: </b>{invoice._id}</Typography>
                     <Typography variant="body2"> <b> {invoice?.hasPaid ? "This invoice has been paid" : "This invoice has NOT been paid"} </b> </Typography>
@@ -285,7 +287,7 @@ const Invoice: React.FC = () => {
                 variant="contained"
                 color="primary"
                 sx={{ marginLeft: "7%"}}>
-                Download PDF (Coming soon!)
+                Download PDF (Coming in V2!)
         </Button>
         <Box sx={{float: "right"}}>
             <Button> 
