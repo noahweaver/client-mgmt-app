@@ -96,7 +96,7 @@ const ClientDashboard: React.FC = () => {
                     addingClient={addingClientToggle}
                 />}
                 <Container maxWidth="md" sx={{ padding: 0, width: '100vw'}} >
-                    <Table>
+                    <Table stickyHeader={true}>
                     <TableHead>
                         <TableRow>
                             <StyledTableCell align="left">More Details</StyledTableCell>

@@ -154,7 +154,7 @@ const Client: React.FC = () => {
                 />
                 }
                 <Container maxWidth="md" sx={{ padding: 2, marginBottom: 3,  width: '100vw'}} >
-                    <Table>
+                    <Table stickyHeader={true}>
                     <TableHead>
                         <TableRow>
                             <StyledTableCell align="left">Open</StyledTableCell>

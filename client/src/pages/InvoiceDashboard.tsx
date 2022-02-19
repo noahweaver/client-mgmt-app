@@ -19,11 +19,11 @@ const InvoiceDashboard: React.FC = () => {
 
     return (
         <div>
-            <Typography variant="h2" sx={{ m: '25px 0 0 25px'}}>Invoices</Typography>
+            <Typography variant="h2" sx={{ m: '25px 0 0 25px'}} >Invoices</Typography>
             {/* Button to add invoice with client selection capability */}
             <p>Will have the ability to search/filter by date or client name</p>
             <Container disableGutters maxWidth="md" sx={{ padding: "2%", width: '95vw'}} >
-                    <Table>
+                    <Table stickyHeader={true}>
                     <TableHead>
                         <TableRow>
                             <StyledTableCell align="left">Open</StyledTableCell>
