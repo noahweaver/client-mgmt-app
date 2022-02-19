@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SaveIcon from '@mui/icons-material/Save';
 import { IClient } from '../../../interfaces/IClient';
 import { DialogTitle, DialogContent, DialogActions, IconButton, Button, Box, TextField, Theme, useTheme, FormControl, FormControlLabel, FormGroup, Checkbox } from '@mui/material';
 import { BootstrapDialog, BootstrapDialogTitle } from './BootstrapDialog';
 import { RedditTextField } from './RedditTextField'; 
+import { useUserContext } from '../context/UserProvider';
+
 
 interface Props {
     client: IClient | undefined,
@@ -12,8 +14,14 @@ interface Props {
     handleEdit: (updatedClient: IClient | undefined) => void
 }
 
+interface clientFormType {
+    updateClient(): (client: IClient) => void
+}
+
 export const EditClientForm: React.FC<Props> = (props) => {
     const theme: Theme = useTheme();
+    const { updateClient } = useUserContext() as clientFormType;
+
 
     const DialogStyle = {
         dialogTitle: {
@@ -46,8 +54,9 @@ export const EditClientForm: React.FC<Props> = (props) => {
 
     function handleEdit(e: any){
         e.preventDefault();
-        //@ts-ignore
-        props.handleEdit(inputs);
+        //@ts-ignore 
+        // props.handleEdit(inputs);
+        updateClient(inputs);
         props.toggleEdit((prev: boolean) => !prev);
     }
 
@@ -124,7 +133,7 @@ export const EditClientForm: React.FC<Props> = (props) => {
                 name="notes"
                 value={inputs?.notes}
                 style={{ gridColumn: '1 / span 2'}}/>
-            <FormGroup>
+            {/* <FormGroup>
                 <FormControlLabel 
                     control={<Checkbox 
                         defaultChecked={props.client?.moneyOwed} 
@@ -133,7 +142,7 @@ export const EditClientForm: React.FC<Props> = (props) => {
                         value={inputs?.moneyOwed} 
                         />} 
                     label={`${props.client?.firstName} ${props.client?.lastName} is currently in an 'unpaid' status`} />
-            </FormGroup>
+            </FormGroup> */}
             <Button 
                 type="submit" 
                 variant="outlined" 

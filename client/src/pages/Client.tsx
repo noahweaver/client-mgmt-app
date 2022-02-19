@@ -54,7 +54,7 @@ const Client: React.FC = () => {
     useEffect(() => {
         getSingleClient();
         getClientInvoices();
-    }, []);
+    }, [isEditing]);
 
     const buttonStyle = {
         button: {
@@ -94,7 +94,6 @@ const Client: React.FC = () => {
     //Delete invoice
     //context?
 
-
     //delete function
     //bring in from context
 
@@ -103,6 +102,7 @@ const Client: React.FC = () => {
         //this is where the edit will be submited from
         //look to client dashboard for functionality
         //can I send directly to context?
+        updateClient(client);
     }
 
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
@@ -117,8 +117,6 @@ const Client: React.FC = () => {
                 }}>
                 <ArrowBackIosNewIcon /> {`Go back to Rolodex`}
             </IconButton>
-            {!isEditing ? 
-            <>
             <Card sx={{ margin: "5% auto", width: "75%", backgroundColor:theme.palette.primary.light, boxShadow:" 10px 5px 5px #767676" }}>
                 <CardHeader 
                     title={`${client?.lastName}, ${client?.firstName}`}
@@ -189,8 +187,7 @@ const Client: React.FC = () => {
                 </TableBody>
                     </Table>
                 </Container>
-            </>
-            :
+            {isEditing && 
             <>
             <BootstrapDialog
                 open={isEditing}
@@ -198,33 +195,16 @@ const Client: React.FC = () => {
                 aria-labelledby="customized-dialog-title"
                 fullScreen={fullScreen}
             >
-            <DialogContent>
                 <EditClientForm 
                 client={client}
                 toggleEdit={(prev: any) => setIsEditing((prev: any) => !prev)}
                 handleEdit={handleEdit}
             />
-            </DialogContent>
             </BootstrapDialog>
             </>
             }
-
-            {/* Delete Client from Client Page */}
-        {/* </BootstrapDialog>
-        <BootstrapDialog open={openDeleteDialog}>
-            <BootstrapDialogTitle 
-                id={'confirm-delete'} 
-                onClose={() => { setOpenDeleteDialog(false); }}>
-                <Typography variant='h6' style={{ padding: "20px"}}>Are you sure you want to delete <b>{props.currentClient?.firstName} {props.currentClient?.lastName}</b> from the database?</Typography>
-            </BootstrapDialogTitle>
-            <DialogActions>
-                <Button onClick={() => { props.handleDelete(); setOpenDeleteDialog(false); }}>Yes, delete {props.currentClient?.firstName}</Button>
-            </DialogActions>
-            <DialogActions>
-                <Button onClick={() => { setOpenDeleteDialog(false); }}>Cancel</Button>
-            </DialogActions>
-        </BootstrapDialog> */}
-    </>
+        
+</>
     );
 };
 

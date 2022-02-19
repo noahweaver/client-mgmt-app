@@ -1,4 +1,4 @@
-import { Box, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import { Box, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import React, { useState, useContext } from 'react';
 import { useUserContext } from '../context/UserProvider';
 import CloseIcon from '@mui/icons-material/Close';
@@ -51,7 +51,7 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
         email: "",
         notes: "",
         userId: _id,
-        moneyOwed: false,
+        // moneyOwed: false,
         }
 
     const [newClient, setNewClient] = useState<IAddClientForm>(initInputs);
@@ -153,7 +153,7 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
                             value={newClient.notes}
                             style={{ gridColumn: '1 / span 2'}}
                         />
-                        <FormGroup>
+                        {/* <FormGroup>
                             <FormControlLabel 
                                 control={<Checkbox 
                                     defaultChecked={false}
@@ -162,7 +162,7 @@ const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addi
                                     value={newClient?.moneyOwed} 
                                 />} 
                                 label="Is this client currently in an 'unpaid' status?" />
-                        </FormGroup>
+                        </FormGroup> */}
                         <Button 
                             type="submit" 
                             variant="outlined" 
