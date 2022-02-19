@@ -91,17 +91,17 @@ const Client: React.FC = () => {
     //ADD new invoice
     //context
 
-    //Delete invoice
-    //context?
+    function handleDelete(){
+        console.log("handleDelete was called")
+        deleteClient(client);
+        navigate(`/clientdashboard`);
+    }
 
     //delete function
     //bring in from context
 
     function handleEdit(){
         console.log("handle edit was called")
-        //this is where the edit will be submited from
-        //look to client dashboard for functionality
-        //can I send directly to context?
         updateClient(client);
     }
 
@@ -203,7 +203,20 @@ const Client: React.FC = () => {
             </BootstrapDialog>
             </>
             }
-        
+            <BootstrapDialog open={openDeleteDialog}>
+                <BootstrapDialogTitle 
+                    id={'confirm-delete'} 
+                    onClose={() => { setOpenDeleteDialog(false); }}>
+                    <Typography variant='h6' style={{ padding: "20px"}}>Are you sure you want to delete <b>{client?.lastName}, {client?.firstName} </b> from the database?</Typography>
+                </BootstrapDialogTitle>
+                <DialogActions>
+                    <Button onClick={() => { handleDelete(); setOpenDeleteDialog(false); }}>Yes, delete {client?.firstName}</Button>
+                </DialogActions>
+                <DialogActions>
+                    <Button onClick={() => { setOpenDeleteDialog(false); }}>Cancel</Button>
+                </DialogActions>
+            </BootstrapDialog>
+
 </>
     );
 };
