@@ -54,7 +54,7 @@ const Client: React.FC = () => {
     useEffect(() => {
         getSingleClient();
         getClientInvoices();
-    }, [isEditing]);
+    }, [isEditing, addingInvoiceToggle]);
 
     const buttonStyle = {
         button: {

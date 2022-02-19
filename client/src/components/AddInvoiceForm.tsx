@@ -73,6 +73,8 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
         calculateTotalPrice();
     }, [tasksPrice, newInvoice.tasks, newInvoice.feesAndTaxes])
 
+
+
     function handleChange(e: any){
         const {name, value} = e.target;
         setNewInvoice(prevInputs => ({
@@ -129,20 +131,22 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
         setAddingTask(false);
     }
 
-    //STILL NEED TO TEST THIS
     function removeTask(task: ITask) {
+        console.log("removeTask was called", task)
         //remove task from state array
-        const newTaskArr = tasks?.filter(t => t.title !== task.title);
-        setTasks(newTaskArr);
+        const newTaskArr = newInvoice.tasks.filter(t => t.title !== task.title);
+        console.log("newTaskArr", newTaskArr)
+        setNewInvoice(prevState => ({
+            ...prevState,
+            tasks: newTaskArr
+        }));
         calculateTaskPrice(newTaskArr);
     }
 
     function handleInvoiceAdd(e: any){
         e.preventDefault();
         props.setAddingInvoiceToggle(false);
-        //FROM CONTEXT
         addInvoice(newInvoice, props.clientId);
-        
         props.getClientInvoices();
     }
 
@@ -220,7 +224,6 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
                                 <StyledTableCell>{task.price}</StyledTableCell>
                                 <StyledTableCell>
                                     <IconButton onClick={() => removeTask(task)}>
-                                        {/* confirmation modal */}
                                         <DeleteIcon />
                                     </IconButton>
                                 </StyledTableCell>
