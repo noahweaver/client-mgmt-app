@@ -115,7 +115,7 @@ const Nav: React.FC<NavProps> = (props) => {
               navigate('/home')
               }}
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, cursor: "pointer" }}
-          >LOGO
+          >CM
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button
