@@ -1,7 +1,9 @@
 #dependencies
 /node_modules
-
+**/DS_Store
 #misc
 .env
 
 yarn.lock
+
+TODO.md
