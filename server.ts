@@ -4,21 +4,18 @@ require('dotenv').config()
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const expressJwt = require('express-jwt')
-
 //Interface Imports
 import { IRequest, IResponse } from "./interfaces/expressInterfaces"
 import { NextFunction } from "express"
-
-
-
-// export const collections: { users?: mongoDB.Collection } = {}
+const port = process.env.PORT || 9000;
+const path = require('path')
 
 //Middleware
 app.use(morgan('dev'))
 app.use(express.json())
 
 //Connect to DB
-mongoose.connect("mongodb://127.0.0.1:27017/client-mgmt",
+mongoose.connect(process.env.MONGODB_URI,
 {useNewUrlParser: true, useUnifiedTopology: true}, 
     (err: any) => {
         if(err){
@@ -29,13 +26,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/client-mgmt",
     }
 );
 
-
 //Routes
 app.use("/authentication", require("./routes/authRouter.ts"))
-app.use("/api", expressJwt({ secret: process.env.SECRET, algorithms: ['HS256'] })) //req.user
+app.use("/api", expressJwt({ secret: process.env.SECRET || "dog bassinet hardwood toenail", algorithms: ['HS256'] })) //req.user
 app.use("/api/client", require("./routes/clientRouter"))
 app.use("/api/invoice", require("./routes/invoiceRouter"))
-
 
 //Error Handling
 app.use((err: any, req: IRequest, res: IResponse, next: NextFunction) => {
@@ -46,8 +41,13 @@ app.use((err: any, req: IRequest, res: IResponse, next: NextFunction) => {
     return res.send({ errMsg: err.message })
 })
 
+app.use(express.static(path.join(__dirname, "client", "build")))
+
+app.get("*", (req: IRequest, res: any) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+})
 
 //Listen for Port
-app.listen(9000, () => {
+app.listen(port, () => {
     console.log(`Server is listening on PORT: 9000`)
 })

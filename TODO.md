@@ -1,6 +1,7 @@
-!TODO BEFORE ASSESSMENT!
 #ADDInvoice
     1. removing task does not update invoice total
+
+#Footer with critical info and version number
 
 
 
