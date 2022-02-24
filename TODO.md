@@ -2,6 +2,7 @@
     1. removing task does not update invoice total
 
 #Footer with critical info and version number
+#logo image for tab instead of react app
 
 
 
