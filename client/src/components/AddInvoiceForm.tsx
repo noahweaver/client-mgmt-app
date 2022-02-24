@@ -1,16 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyledTableCell, StyledTableRow } from './StyledTable';
-import { Box, Table, TableRow, TextField, TextFieldProps, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery, Checkbox, FormControlLabel, FormGroup, TableHead, TableBody } from '@mui/material';
 import { useUserContext } from '../context/UserProvider';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useTheme, Theme } from '@mui/material/styles';
 import { IInvoice, IAddInvoiceForm } from '../../../interfaces/IInvoice';
 import { ITask } from '../../../interfaces/ITask';
 import { RedditTextField } from './RedditTextField'; 
 import { InvoiceContext } from '../context/InvoiceProvider';
 import AddTask from './AddTask';
-
+import { StyledTableCell, StyledTableRow } from './StyledTable';
+import { useTheme, Box, Table, TableRow, Button, DialogTitle, Dialog, DialogContent, IconButton, useMediaQuery, Checkbox, FormControlLabel, FormGroup, TableHead, TableBody } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
 
   interface IInvoiceFormProps {
     setAddingInvoiceToggle: (value: React.SetStateAction<boolean>) => void ,
@@ -28,8 +26,6 @@ type clientFormType ={
         _id: string
     }
 }
-
-
 
 const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
     
@@ -50,7 +46,7 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
     const [tasksPrice, setTasksPrice] = useState(0)
     const [tasks, setTasks] = useState<Array<ITask>>([]); 
     const { addInvoice } = useContext(InvoiceContext) as invoiceFormType;
-    const theme: Theme = useTheme();
+    const theme = useTheme();
 
     const DialogStyle = {
         dialogTitle: {
@@ -72,8 +68,6 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
     useEffect(() => {
         calculateTotalPrice();
     }, [tasksPrice, newInvoice.tasks, newInvoice.feesAndTaxes])
-
-
 
     function handleChange(e: any){
         const {name, value} = e.target;
@@ -116,9 +110,7 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
                 ...prevState, 
                 totalPrice: ptp
             }))
-    
         }
-        
     }
 
     function addTask(task: ITask){
@@ -229,7 +221,6 @@ const AddInvoiceForm: React.FC<IInvoiceFormProps> = (props) => {
                                 </StyledTableCell>
                             </StyledTableRow>
                             )}
-
                         </TableBody>
                     </Table>
                     <Button 

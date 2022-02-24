@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import AuthForm from '../components/AuthForm';
 import { useUserContext } from '../context/UserProvider';
-import { Card, Button, Typography, Box } from '@mui/material';
-import { useTheme, Theme } from '@mui/material/styles';
+import AuthForm from '../components/AuthForm';
+import { Card, Button, Typography, Box, useTheme } from '@mui/material';
 
 export interface IInput {
     username: string,
@@ -24,7 +23,7 @@ const Auth: React.FC  = () => {
     const [inputs, setInputs] = useState<IInput>(initInputs);
     const [toggle, setToggle] = useState<boolean>(false);
     const { errMsg, login, signup, resetAuthErr, authErr } = useUserContext() as authUserState;
-    const theme: Theme = useTheme();
+    const theme = useTheme();
 
     const style = {
         container: {

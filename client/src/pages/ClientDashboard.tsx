@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import AddClientForm from '../components/AddClientForm';
-import { useUserContext } from '../context/UserProvider';
-import { IClient } from '../../../interfaces/IClient';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import EditClientform from '../components/EditClientForm';
-import { Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography, useMediaQuery, Container} from '@mui/material';
-import { useTheme, Theme } from '@mui/material/styles';
-import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/UserProvider';
+import AddClientForm from '../components/AddClientForm';
+import { IClient } from '../../../interfaces/IClient';
 import ClientModal from '../components/ClientModal';
 import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
+import { Button, Table, TableBody, TableContainer, TableHead, TableRow, Typography, useMediaQuery, Container, useTheme} from '@mui/material';
 
 
 type clientdashboardType = {
@@ -36,7 +33,7 @@ const ClientDashboard: React.FC = () => {
     const [currentClient, setCurrentClient] = useState<IClient | undefined>();
 
     const { clients, deleteClient, updateClient } = useUserContext() as clientdashboardType;
-    const theme: Theme = useTheme();
+    const theme = useTheme();
 
     const buttonStyle = {
         button: {

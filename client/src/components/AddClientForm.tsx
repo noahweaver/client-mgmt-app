@@ -1,11 +1,9 @@
-import { Box, Button, DialogTitle, Dialog, DialogContent, IconButton, styled, alpha, OutlinedInputProps, useMediaQuery, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useUserContext } from '../context/UserProvider';
-import CloseIcon from '@mui/icons-material/Close';
-import { useTheme, Theme } from '@mui/material/styles';
-import { IClient, IAddClientForm } from '../../../interfaces/IClient';
-import { userInfo } from 'os';
+import { IAddClientForm } from '../../../interfaces/IClient';
 import { RedditTextField } from './RedditTextField'; 
+import { Box, Button, DialogTitle, Dialog, DialogContent, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 
   interface IClientFormProps {
@@ -23,7 +21,7 @@ type clientFormType ={
 const AddClientForm: React.FC<IClientFormProps> = ({ setAddingClientToggle, addingClient }) => {
 
     const { addNewClient, user: { _id } } = useUserContext() as clientFormType;
-    const theme: Theme = useTheme();
+    const theme = useTheme();
 
     const DialogStyle = {
         dialogTitle: {
