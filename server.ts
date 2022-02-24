@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGODB_URI,
 
 //Routes
 app.use("/authentication", require("./routes/authRouter.ts"))
-app.use("/api", expressJwt({ secret, algorithms: ['HS256'] })) //req.user
+app.use("/api", expressJwt({ secret: secret, algorithms: ['HS256'] })) //req.user
 app.use("/api/client", require("./routes/clientRouter"))
 app.use("/api/invoice", require("./routes/invoiceRouter"))
 

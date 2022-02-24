@@ -1,8 +1,11 @@
 #ADDInvoice
     1. removing task does not update invoice total
+    2. Invoices page does not add invoices immediately. Refresh required
 
 #Footer with critical info and version number
-#logo image for tab instead of react app
+
+#Bugs
+    1. logo image for tab instead of react app
 
 
 
@@ -47,7 +50,7 @@
 #Nav
     1. add to avatar dropdown on nav
         a. account settings
-        b. logoug (remove from navbar)
+        b. logout (remove from navbar)
     2. Logo instead of "CM"
     3. Tabs?
 
