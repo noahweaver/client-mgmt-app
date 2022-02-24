@@ -9,7 +9,7 @@ import { IRequest, IResponse } from "./interfaces/expressInterfaces"
 import { NextFunction } from "express"
 const port = process.env.PORT || 9000;
 const path = require('path');
-const secret = process.env.SECRET || "dog bassinet hardwood toenail";
+const secret = process.env.SECRET ;
 
 //Middleware
 app.use(morgan('dev'))
