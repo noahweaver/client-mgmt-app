@@ -1,17 +1,21 @@
-#ADDInvoice
-    1. removing task does not update invoice total
-    2. Invoices page does not add invoices immediately. Refresh required
 
-#Footer with critical info and version number
+
 
 #Bugs
-    1. logo image for tab instead of react app
-
+#ADDInvoice
+    -Invoices page does not add invoices immediately. Refresh required
+    -tasks should not be clickable yet
 
 
 
 
 !V2!
+
+#Footer
+    -with critical info and version number
+    -github link?
+    -contact support to footer
+
 
 #Visible Errors like on login page
 
@@ -51,16 +55,19 @@
     1. add to avatar dropdown on nav
         a. account settings
         b. logout (remove from navbar)
+        c.contact support
     2. Logo instead of "CM"
     3. Tabs?
 
-#Report a bug link
+
 
 #Contact Support page
+    -Report a bug link
 
 #Client Modal
     1. Default size without screwing everything up
 
-
+#Misc
+    1. logo image for tab instead of react app
     
 
