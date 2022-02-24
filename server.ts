@@ -8,7 +8,8 @@ const expressJwt = require('express-jwt')
 import { IRequest, IResponse } from "./interfaces/expressInterfaces"
 import { NextFunction } from "express"
 const port = process.env.PORT || 9000;
-const path = require('path')
+const path = require('path');
+const secret = process.env.SECRET || "dog bassinet hardwood toenail";
 
 //Middleware
 app.use(morgan('dev'))
@@ -28,7 +29,7 @@ mongoose.connect(process.env.MONGODB_URI,
 
 //Routes
 app.use("/authentication", require("./routes/authRouter.ts"))
-app.use("/api", expressJwt({ secret: process.env.SECRET || "dog bassinet hardwood toenail", algorithms: ['HS256'] })) //req.user
+app.use("/api", expressJwt({ secret, algorithms: ['HS256'] })) //req.user
 app.use("/api/client", require("./routes/clientRouter"))
 app.use("/api/invoice", require("./routes/invoiceRouter"))
 

@@ -15,3 +15,5 @@ node_modules/
 *.orig
 .idea/
 .vscode/
+client-mgmt.archive
+@clientweavercluster0.4y18k.mongodb.net
